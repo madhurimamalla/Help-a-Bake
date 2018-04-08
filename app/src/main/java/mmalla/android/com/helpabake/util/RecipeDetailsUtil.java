@@ -42,10 +42,10 @@ public class RecipeDetailsUtil {
     private static final String STEPS_VIDEO_URL = "videoURL";
     private static final String STEPS_THUMBNAIL_URL = "thumbnailURL";
 
-    public static List<Recipe> getRecipesFromJson(String recipesJsonStr) throws JSONException {
+    public static ArrayList<Recipe> getRecipesFromJson(String recipesJsonStr) throws JSONException {
         Log.d("Json String: ", recipesJsonStr);
         JSONArray array = new JSONArray(recipesJsonStr);
-        List<Recipe> recipeList = new ArrayList<Recipe>();
+        ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
         for (int i = 0; i < array.length(); i++) {
             //Recipe recipe = new Recipe();
             JSONObject object = (JSONObject) array.getJSONObject(i);

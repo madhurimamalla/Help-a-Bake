@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,13 +29,18 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
      * Create a RecyclerView to load an adapter with
      * Recipe names on it with a card view each
      */
-    @BindView(R.id.recyclerview) RecyclerView recyclerView;
-    @BindView(R.id.loading_icon) ProgressBar mProgressBar;
-    @BindView(R.id.error_message) TextView mErrorMessage;
+    @BindView(R.id.recyclerview)
+    RecyclerView recyclerView;
+    @BindView(R.id.loading_icon)
+    ProgressBar mProgressBar;
+    @BindView(R.id.error_message)
+    TextView mErrorMessage;
 
     private RecipesAdapter recipesAdapter;
     private LinearLayoutManager mLayoutManager;
-    private List<Recipe> recipesList;
+    private ArrayList<Recipe> recipesList;
+
+    private static final String RECIPE_LIST_SAVE_INSTANCE = "recipe_list";
 
     /**
      * @param savedInstanceState
@@ -57,10 +63,16 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         /**
          * Retrieve the list of recipes
          */
-        new FetchRecipesList().execute();
+        if (savedInstanceState != null) {
+            recipesList = savedInstanceState.getParcelableArrayList(RECIPE_LIST_SAVE_INSTANCE);
+            showRecipesList();
+        } else {
+            new FetchRecipesList().execute();
+        }
     }
 
     public void showRecipesList() {
@@ -146,5 +158,11 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         file.read(formArray);
         file.close();
         return new String(formArray);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(RECIPE_LIST_SAVE_INSTANCE, recipesList);
+        super.onSaveInstanceState(outState);
     }
 }
