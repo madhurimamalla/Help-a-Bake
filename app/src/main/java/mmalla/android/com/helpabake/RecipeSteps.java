@@ -8,7 +8,7 @@ import timber.log.Timber;
 
 public class RecipeSteps extends Activity {
 
-
+    public static final String RECIPE_EXTRA_INTENT = "Recipe_parceled";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class RecipeSteps extends Activity {
          * Retrieve the passed on recipe here
          */
         Intent previousIntent = getIntent();
-        Recipe recipe = previousIntent.getParcelableExtra("Recipe_parceled");
+        Recipe recipe = previousIntent.getParcelableExtra(RECIPE_EXTRA_INTENT);
         Timber.d("Recipe name: " + recipe.getRecipeName());
     }
 }

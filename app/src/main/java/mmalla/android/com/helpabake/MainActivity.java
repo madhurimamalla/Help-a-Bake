@@ -7,8 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -37,10 +38,12 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     TextView mErrorMessage;
 
     private RecipesAdapter recipesAdapter;
-    private LinearLayoutManager mLayoutManager;
+    private GridLayoutManager mLayoutManager;
     private ArrayList<Recipe> recipesList;
 
     private static final String RECIPE_LIST_SAVE_INSTANCE = "recipe_list";
+    private static final String RECIPE_EXTRA_INTENT = "Recipe_parceled";
+    private static final int SCALING_FACTOR = 360;
 
     /**
      * @param savedInstanceState
@@ -60,7 +63,15 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
          */
         ButterKnife.bind(this);
 
-        mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        /**
+         * Make sure this runs efficiently on all mobiles and tablets.
+         * On tablets, it'll show two columns or more
+         */
+        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        int scalingFactor = SCALING_FACTOR;
+        int noOfColumns = (int) (dpWidth / scalingFactor);
+        mLayoutManager = new GridLayoutManager(getApplicationContext(), noOfColumns);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -103,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
          * Parcel the recipe and send it over to the next RecipeSteps Activity
          */
         Intent recipeStepsIntent = new Intent(this, RecipeSteps.class);
-        recipeStepsIntent.putExtra("Recipe_parceled", recipe);
+        recipeStepsIntent.putExtra(RECIPE_EXTRA_INTENT, recipe);
         startActivity(recipeStepsIntent);
     }
 
@@ -123,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
             try {
                 String jsonStr = AssetJSONFile(getResources().getString(R.string.baking_asset), getApplicationContext());
                 recipesList = RecipeDetailsUtil.getRecipesFromJson(jsonStr);
-                Timber.d("The recipeList is retrieved");
+                Timber.d("The recipe list is retrieved");
             } catch (Exception e) {
                 e.printStackTrace();
                 showErrorMessage();
