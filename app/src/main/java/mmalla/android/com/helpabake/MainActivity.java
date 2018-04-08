@@ -1,6 +1,7 @@
 package mmalla.android.com.helpabake;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,17 +9,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import mmalla.android.com.helpabake.util.RecipeDetailsUtil;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements RecipesAdapter.RecipesAdapterOnClickListener {
 
@@ -26,14 +28,13 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
      * Create a RecyclerView to load an adapter with
      * Recipe names on it with a card view each
      */
-    private RecyclerView recyclerView;
+    @BindView(R.id.recyclerview) RecyclerView recyclerView;
+    @BindView(R.id.loading_icon) ProgressBar mProgressBar;
+    @BindView(R.id.error_message) TextView mErrorMessage;
+
     private RecipesAdapter recipesAdapter;
     private LinearLayoutManager mLayoutManager;
-    private ProgressBar mProgressBar;
-    private TextView mErrorMessage;
     private List<Recipe> recipesList;
-
-    private static final String TAG = MainActivity.class.getSimpleName();
 
     /**
      * @param savedInstanceState
@@ -43,9 +44,16 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mProgressBar = (ProgressBar) findViewById(R.id.loading_icon);
-        mErrorMessage = (TextView) findViewById(R.id.error_message);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        /**
+         * Set up Timber for logging
+         */
+        Timber.plant(new Timber.DebugTree());
+
+        /**
+         * Binding the views here
+         */
+        ButterKnife.bind(this);
+
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -80,9 +88,11 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     @Override
     public void onClick(Recipe recipe) {
         /**
-         * TODO Write a new Activity which handles the next Details (MasterDetails fragments) page and then implement this
+         * Parcel the recipe and send it over to the next RecipeSteps Activity
          */
-        Toast.makeText(this, "Clicked: " + recipe.getRecipeName(), Toast.LENGTH_SHORT).show();
+        Intent recipeStepsIntent = new Intent(this, RecipeSteps.class);
+        recipeStepsIntent.putExtra("Recipe_parceled", recipe);
+        startActivity(recipeStepsIntent);
     }
 
     private class FetchRecipesList extends AsyncTask<String, Void, List<Recipe>> {
@@ -101,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
             try {
                 String jsonStr = AssetJSONFile(getResources().getString(R.string.baking_asset), getApplicationContext());
                 recipesList = RecipeDetailsUtil.getRecipesFromJson(jsonStr);
-                Log.d(TAG, "The recipeList is retrieved");
+                Timber.d("The recipeList is retrieved");
             } catch (Exception e) {
                 e.printStackTrace();
                 showErrorMessage();
@@ -121,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     }
 
     /**
-     * Description: Retrieve the list of recipes from
+     * Description: Util to retrieve the list of recipes from
      * a local assets json file
      *
      * @param filename
