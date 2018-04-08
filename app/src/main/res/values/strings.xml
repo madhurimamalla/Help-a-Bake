@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HelpABake</string>
+    <string name="error_message">There is some error. Try again!</string>
+    <string name="baking_asset">baking.json</string>
 </resources>
