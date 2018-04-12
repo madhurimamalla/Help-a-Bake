@@ -1,4 +1,4 @@
-package mmalla.android.com.helpabake;
+package mmalla.android.com.helpabake.recipestep;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -10,6 +10,9 @@ public class RecipeStep implements Parcelable{
     private String description;
     private String videoURL;
     private String thumbnailURL;
+
+    public RecipeStep(){
+    }
 
     public RecipeStep(int id, String shortDescription, String description, String videoURL, String thumbnailURL) {
         this.id = id;

@@ -1,4 +1,4 @@
-package mmalla.android.com.helpabake;
+package mmalla.android.com.helpabake.ingredient;
 
 
 import android.os.Parcel;

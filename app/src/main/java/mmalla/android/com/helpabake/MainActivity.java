@@ -111,9 +111,9 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     @Override
     public void onClick(Recipe recipe) {
         /**
-         * Parcel the recipe and send it over to the next RecipeSteps Activity
+         * Parcel the recipe and send it over to the next RecipeStepsDetail Activity
          */
-        Intent recipeStepsIntent = new Intent(this, RecipeSteps.class);
+        Intent recipeStepsIntent = new Intent(this, RecipeDetails.class);
         recipeStepsIntent.putExtra(RECIPE_EXTRA_INTENT, recipe);
         startActivity(recipeStepsIntent);
     }
@@ -122,8 +122,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
 
         @Override
         protected void onPreExecute() {
-            recyclerView.setVisibility(View.INVISIBLE);
-            mProgressBar.setVisibility(View.VISIBLE);
+            showLoading();
         }
 
         @Override

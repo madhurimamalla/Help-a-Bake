@@ -16,14 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".RecipeSteps"
-            android:label="@string/title_activity_recipe_steps"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="mmalla.android.com.helpabake.MainActivity" />
-        </activity>
+        <activity android:name=".RecipeDetails"></activity>
     </application>
 
+    <!-- TODO Add the navigation back functionality from Details page to Master list of recipes -->
 </manifest>

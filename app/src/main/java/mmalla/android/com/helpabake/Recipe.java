@@ -3,21 +3,24 @@ package mmalla.android.com.helpabake;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
+import java.util.ArrayList;
+
+import mmalla.android.com.helpabake.ingredient.Ingredient;
+import mmalla.android.com.helpabake.recipestep.RecipeStep;
 
 public class Recipe implements Parcelable{
 
     private int id;
     private String recipeName;
-    private List<Ingredient> ingredients;
-    private List<RecipeStep> steps;
+    private ArrayList<Ingredient> ingredients;
+    private ArrayList<RecipeStep> steps;
     private int servings;
     private String image;
 
     public Recipe() {
     }
 
-    public Recipe(int id, String recipeName, List<Ingredient> ingredients, List<RecipeStep> steps, int servings, String image) {
+    public Recipe(int id, String recipeName, ArrayList<Ingredient> ingredients, ArrayList<RecipeStep> steps, int servings, String image) {
         this.id = id;
         this.recipeName = recipeName;
         this.ingredients = ingredients;
@@ -63,19 +66,19 @@ public class Recipe implements Parcelable{
         this.recipeName = recipeName;
     }
 
-    public List<Ingredient> getIngredients() {
+    public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public List<RecipeStep> getSteps() {
+    public ArrayList<RecipeStep> getSteps() {
         return steps;
     }
 
-    public void setSteps(List<RecipeStep> steps) {
+    public void setSteps(ArrayList<RecipeStep> steps) {
         this.steps = steps;
     }
 
