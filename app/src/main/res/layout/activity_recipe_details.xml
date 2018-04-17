@@ -1,28 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RecipeDetails">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:padding="4dp"
+        android:text="@string/ingredients_list"
+        android:layout_margin="4dp"
+        android:textAlignment="center" />
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/cardview_default_elevation">
+
+        <FrameLayout
+            android:id="@+id/ingredient_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:context=".RecipeDetails">
+            android:layout_height="wrap_content" />
+    </android.support.v7.widget.CardView>
 
-            <FrameLayout
-                android:id="@+id/ingredient_fragment_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"></FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:background="@color/colorAccent"
+        android:padding="4dp"
+        android:text="@string/recipe_steps"
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
+        android:textStyle="italic" />
 
-            <FrameLayout
-                android:id="@+id/recipe_steps_fragment_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"></FrameLayout>
-        </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/recipe_steps_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </ScrollView>
 </LinearLayout>

@@ -3,7 +3,6 @@ package mmalla.android.com.helpabake;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Fragment;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,12 +14,17 @@ import android.view.ViewGroup;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
@@ -34,14 +38,17 @@ public class VideoPlayerFragment extends Fragment {
     @BindView(R.id.exo_video_player)
     SimpleExoPlayerView mExoPlayerView;
     SimpleExoPlayer mExoPlayer;
-    Context mContext;
+
+    private boolean playWhenReady = true;
+    private int currentWindow = 0;
+    private long playbackPosition = 0;
+    private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
+    private ComponentListener componentListener;
+
     Recipe recipe;
     RecipeStep recipeStep;
     public static final String RECIPE_PARCELABLE = "RECIPE_PARCELABLE";
     public static final String RECIPE_STEP = "RECIPE_STEP";
-    private boolean playWhenReady = true;
-    private int currentWindow = 0;
-    private long playbackPosition = 0;
 
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -50,15 +57,19 @@ public class VideoPlayerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.video_player_fragment, container, false);
         ButterKnife.bind(this, view);
-        mContext = getContext();
 
+        if (savedInstanceState != null) {
+            recipe = savedInstanceState.getParcelable(RECIPE_PARCELABLE);
+            recipeStep = savedInstanceState.getParcelable(RECIPE_STEP);
+        }
         /**
          * Get the recipe here and play around with it
          */
-        if (getArguments() != null) {
+        else if (getArguments() != null) {
             recipe = getArguments().getParcelable(RECIPE_PARCELABLE);
             recipeStep = getArguments().getParcelable(RECIPE_STEP);
         }
+        componentListener = new ComponentListener();
 
         Timber.d("URL for the recipe step is: " + recipeStep.getVideoURL());
         return view;
@@ -67,9 +78,11 @@ public class VideoPlayerFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void initializePlayer() {
 
+        TrackSelection.Factory adaptiveTrackSelectionFactory =
+                new AdaptiveTrackSelection.Factory(BANDWIDTH_METER);
         mExoPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getContext()),
-                new DefaultTrackSelector(), new DefaultLoadControl());
-
+                new DefaultTrackSelector(adaptiveTrackSelectionFactory), new DefaultLoadControl());
+        mExoPlayer.addListener(componentListener);
         mExoPlayerView.setPlayer(mExoPlayer);
 
         mExoPlayer.setPlayWhenReady(playWhenReady);
@@ -77,7 +90,7 @@ public class VideoPlayerFragment extends Fragment {
 
         Uri videoUri = Uri.parse(recipeStep.getVideoURL());
         MediaSource mediaSource = buildMediaSource(videoUri);
-        mExoPlayer.prepare(mediaSource);
+        mExoPlayer.prepare(mediaSource, true, false);
 
     }
 
@@ -137,8 +150,41 @@ public class VideoPlayerFragment extends Fragment {
             playbackPosition = mExoPlayer.getCurrentPosition();
             currentWindow = mExoPlayer.getCurrentWindowIndex();
             playWhenReady = mExoPlayer.getPlayWhenReady();
+            mExoPlayer.removeListener(componentListener);
             mExoPlayer.release();
             mExoPlayer = null;
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(RECIPE_PARCELABLE, recipe);
+        outState.putParcelable(RECIPE_STEP, recipeStep);
+    }
+
+    private class ComponentListener extends Player.DefaultEventListener {
+        @Override
+        public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+            String stateString;
+            switch (playbackState) {
+                case ExoPlayer.STATE_IDLE:
+                    stateString = "ExoPlayer.STATE_IDLE      -";
+                    break;
+                case ExoPlayer.STATE_BUFFERING:
+                    stateString = "ExoPlayer.STATE_BUFFERING -";
+                    break;
+                case ExoPlayer.STATE_READY:
+                    stateString = "ExoPlayer.STATE_READY     -";
+                    break;
+                case ExoPlayer.STATE_ENDED:
+                    stateString = "ExoPlayer.STATE_ENDED     -";
+                    break;
+                default:
+                    stateString = "UNKNOWN_STATE             -";
+                    break;
+            }
+            Timber.d("changed state to " + stateString
+                    + " playWhenReady: " + playWhenReady);
         }
     }
 }
