@@ -50,6 +50,12 @@ public class VideoPlayerFragment extends Fragment {
     public static final String RECIPE_PARCELABLE = "RECIPE_PARCELABLE";
     public static final String RECIPE_STEP = "RECIPE_STEP";
 
+    public VideoPlayerFragment() {
+        /**
+         * Empty constructor
+         */
+    }
+
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable

@@ -1,13 +1,12 @@
 <resources>
-    <string name="app_name">HelpABake</string>
+    <string name="app_name">Help A Bake</string>
     <string name="error_message">There is some error. Try again!</string>
     <string name="baking_asset">baking.json</string>
     <string name="title_activity_recipe_steps">RecipeSteps</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_recipe_step_detail">RecipeStepDetailActivity</string>
-    <string name="video_not_available">Video isn\'t available for this step</string>
+    <string name="title_activity_recipe_step_detail">Recipe Step Detail</string>
+    <string name="video_not_available">A video isn\'t available for this step</string>
     <string name="ingredients_list">Ingredients list</string>
     <string name="recipe_steps">Recipe steps</string>
+    <string name="long_recipe_description">Recipe\'s long description go here: 6. Pour the filling into the prepared crust and smooth the top. Spread the whipped cream over the filling. Refrigerate the pie for at least 2 hours. Then it\'s ready to serve!</string>
 </resources>

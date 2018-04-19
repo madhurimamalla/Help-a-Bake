@@ -36,15 +36,25 @@ public class RecipeStepsFragment extends Fragment implements RecipeStepsAdapter.
          */
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        this.recipeSteps = new ArrayList<RecipeStep>();
+        //this.recipe = new Recipe();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        recipeSteps = new ArrayList<RecipeStep>();
-        recipe = new Recipe();
+        //recipeSteps = new ArrayList<RecipeStep>();
+        //recipe = new Recipe();
 
-        if (getArguments() != null) {
+        if (savedInstanceState != null) {
+            recipeSteps = savedInstanceState.getParcelableArrayList(RECIPE_STEP_LIST);
+            recipe = savedInstanceState.getParcelable(RECIPE_PARCELABLE);
+        } else if (getArguments() != null) {
             recipeSteps = getArguments().getParcelableArrayList(RECIPE_STEP_LIST);
             recipe = getArguments().getParcelable(RECIPE_PARCELABLE);
         }
@@ -60,6 +70,14 @@ public class RecipeStepsFragment extends Fragment implements RecipeStepsAdapter.
         return rootView;
     }
 
+    public void setRecipeStepList(ArrayList<RecipeStep> recipeStepList){
+        this.recipeSteps = recipeStepList;
+    }
+
+    public void setRecipe(Recipe recipe){
+        this.recipe = recipe;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(RecipeStep recipeStep) {
@@ -73,5 +91,12 @@ public class RecipeStepsFragment extends Fragment implements RecipeStepsAdapter.
         recipeStepDetailIntent.putExtra(RECIPE_EXTRA_INTENT, recipe);
         recipeStepDetailIntent.putExtra(RECIPE_STEP, recipeStep);
         startActivity(recipeStepDetailIntent);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(RECIPE_STEP_LIST, recipeSteps);
+        outState.putParcelable(RECIPE_PARCELABLE, recipe);
     }
 }

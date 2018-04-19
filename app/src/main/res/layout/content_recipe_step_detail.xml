@@ -28,7 +28,9 @@
         android:id="@+id/recipe_step_detail_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:layout_margin="8dp"
+        tools:text="@string/long_recipe_description"
         android:gravity="center"
         android:padding="8dp"/>
 

@@ -15,7 +15,6 @@
         android:text="TextView"
         android:textAlignment="textStart"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-        android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="1" />
@@ -28,7 +27,6 @@
         android:paddingRight="4dp"
         android:text="TextView"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="CUP" />
@@ -42,7 +40,6 @@
         android:paddingRight="4dp"
         android:text="TextView"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-        android:textStyle="italic"
         app:layout_constraintEnd_toStartOf="@+id/measure"
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toEndOf="@+id/quantity"

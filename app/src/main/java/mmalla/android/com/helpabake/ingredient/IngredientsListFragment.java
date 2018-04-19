@@ -15,15 +15,19 @@ import java.util.ArrayList;
 
 import mmalla.android.com.helpabake.R;
 
-public class IngredientsListFragment extends Fragment{
+public class IngredientsListFragment extends Fragment {
 
     private ArrayList listOfIngredients;
     public static final String INGREDIENTS_LIST = "INGREDIENTS_LIST";
 
     public IngredientsListFragment() {
         /**
-         * Empty Constructor
+         * Mandatory Empty Constructor
          */
+    }
+
+    public void setIngredientsList(ArrayList<Ingredient> ingredients){
+        this.listOfIngredients = ingredients;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -31,9 +35,9 @@ public class IngredientsListFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        listOfIngredients = new ArrayList<Ingredient>();
-
-        if(getArguments()!=null){
+        if (savedInstanceState != null) {
+            listOfIngredients = savedInstanceState.getParcelableArrayList(INGREDIENTS_LIST);
+        } else if (getArguments() != null) {
             listOfIngredients = getArguments().getParcelableArrayList(INGREDIENTS_LIST);
         }
 
@@ -45,5 +49,11 @@ public class IngredientsListFragment extends Fragment{
 
         recyclerView.setAdapter(new IngredientsListAdapter(listOfIngredients, getContext()));
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(INGREDIENTS_LIST, listOfIngredients);
     }
 }
