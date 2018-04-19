@@ -19,9 +19,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RecipeDetails"
+            android:name=".RecipeDetailsActivity"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -30,11 +30,11 @@
             android:name=".RecipeStepDetailActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:label="@string/title_activity_recipe_step_detail"
-            android:parentActivityName=".RecipeDetails"
+            android:parentActivityName=".RecipeDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="mmalla.android.com.helpabake.RecipeDetails" />
+                android:value="mmalla.android.com.helpabake.RecipeDetailsActivity" />
         </activity>
     </application>
 

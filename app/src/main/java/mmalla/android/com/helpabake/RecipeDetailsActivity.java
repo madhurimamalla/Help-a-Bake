@@ -14,29 +14,24 @@ import mmalla.android.com.helpabake.recipestep.RecipeStep;
 import mmalla.android.com.helpabake.recipestep.RecipeStepsFragment;
 import timber.log.Timber;
 
-public class RecipeDetails extends AppCompatActivity {
+public class RecipeDetailsActivity extends AppCompatActivity {
 
-    public static final String RECIPE_EXTRA_INTENT = "Recipe_parceled";
+    public static final String RECIPE_EXTRA_INTENT = "RECIPE_EXTRA_INTENT";
+    public static final String RECIPE_STEP = "RECIPE_STEP";
     public Recipe recipe;
+    public RecipeStep recipeStep;
 
     /**
      * A single-pane display refers to phone screens, and two-pane to larger tablet screens
      */
-    private boolean mTwoPane;
+    private boolean mTwoPane = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
 
-//        if (findViewById(R.id.linear_layout_to_verify) != null) {
-//            mTwoPane = true;
-//            Timber.d("This a tablet!");
-//            getDetails();
-//            displayVideoOfRecipeStep();
-//        } else {
-//            mTwoPane = false;
-//        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState != null) {
             recipe = savedInstanceState.getParcelable(RECIPE_EXTRA_INTENT);
@@ -47,16 +42,16 @@ public class RecipeDetails extends AppCompatActivity {
              */
             Intent previousIntent = getIntent();
             recipe = previousIntent.getParcelableExtra(RECIPE_EXTRA_INTENT);
+            Timber.d("Recipe name: " + recipe.getRecipeName());
             Toast.makeText(this, "Recipe clicked is " + recipe.getRecipeName(), Toast.LENGTH_SHORT).show();
         }
-        Timber.d("Recipe name: " + recipe.getRecipeName());
+
+        if (findViewById(R.id.linear_layout_to_verify) != null) {
+            mTwoPane = true;
+            Timber.d("This a tablet!");
+        }
         getDetails();
     }
-
-//    public void displayVideoOfRecipeStep() {
-//        Timber.d("Inside getRecipeStepDetails()...");
-//
-//    }
 
     public void getDetails() {
         ArrayList<Ingredient> ingredients = recipe.getIngredients();
@@ -72,9 +67,29 @@ public class RecipeDetails extends AppCompatActivity {
         RecipeStepsFragment recipeStepsFragment = new RecipeStepsFragment();
         recipeStepsFragment.setRecipeStepList(recipeSteps);
         recipeStepsFragment.setRecipe(recipe);
+        recipeStepsFragment.setMTwoPane(mTwoPane);
+        recipeStepsFragment.setParentActivity(this);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.recipe_steps_fragment_container, recipeStepsFragment);
         transaction.commit();
+
+        if(mTwoPane == true){
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(RECIPE_EXTRA_INTENT, recipe);
+            /**
+             * Initially display the first step
+             */
+            recipeStep = recipe.getSteps().get(0);
+            bundle.putParcelable(RECIPE_STEP, recipeStep);
+            bundle.putParcelable(RECIPE_EXTRA_INTENT, recipe);
+            RecipeStepDetailFragment recipeStepDetailFragment = new RecipeStepDetailFragment();
+            recipeStepDetailFragment.setArguments(bundle);
+            /**
+             * Calling the fragment as this is a tablet
+             */
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.recipe_step_detail_fragment, recipeStepDetailFragment).commit();
+        }
     }
 
     @Override

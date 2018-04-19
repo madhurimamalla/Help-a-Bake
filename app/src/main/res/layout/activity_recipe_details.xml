@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".RecipeDetails">
+    tools:context=".RecipeDetailsActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="4dp"
         android:background="@color/colorAccent"
         android:padding="4dp"
         android:text="@string/ingredients_list"
-        android:layout_margin="4dp"
         android:textAlignment="center" />
 
     <android.support.v7.widget.CardView

@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     private ArrayList<Recipe> recipesList;
 
     private static final String RECIPE_LIST_SAVE_INSTANCE = "recipe_list";
-    private static final String RECIPE_EXTRA_INTENT = "Recipe_parceled";
+    private static final String RECIPE_EXTRA_INTENT = "RECIPE_EXTRA_INTENT";
     private static final int SCALING_FACTOR = 360;
 
     /**
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         /**
          * Parcel the recipe and send it over to the next RecipeStepsDetail Activity
          */
-        Intent recipeStepsIntent = new Intent(this, RecipeDetails.class);
+        Intent recipeStepsIntent = new Intent(this, RecipeDetailsActivity.class);
         recipeStepsIntent.putExtra(RECIPE_EXTRA_INTENT, recipe);
         startActivity(recipeStepsIntent);
     }

@@ -10,4 +10,5 @@
     <color name="colorDivider">#BDBDBD</color>
     <color name="background_color">#FFFFFF</color>
     <color name="border_color">#212121</color>
+    <color name="card_view_light_accent">#F0F4C3</color>
 </resources>
