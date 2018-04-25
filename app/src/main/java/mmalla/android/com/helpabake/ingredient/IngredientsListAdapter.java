@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -67,13 +69,15 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
         Ingredient ingredient = mList.get(holder.getAdapterPosition());
 
         TextView mQuantityTV = (TextView) holder.mQuantityTextView.findViewById(R.id.quantity);
-        mQuantityTV.setText(Integer.toString(ingredient.getQuantity()));
+        mQuantityTV.setText(Double.toString(ingredient.getQuantity()));
 
         TextView mMeasureTV = (TextView) holder.mMeasureTextView.findViewById(R.id.measure);
         mMeasureTV.setText(ingredient.getMeasure());
 
         TextView mIngredient = (TextView) holder.mIngredientTextView.findViewById(R.id.ingredient);
-        mIngredient.setText(ingredient.getIngredient());
+        String ingredientText = ingredient.getIngredient().toString();
+        ingredientText = StringUtils.capitalize(ingredientText);
+        mIngredient.setText(ingredientText);
 
         Timber.d("Set up the Quantity as: " + mQuantityTV + " and Measure: " + mMeasureTV
                 + " . Finally, the ingredient is: " + mIngredient + ".");

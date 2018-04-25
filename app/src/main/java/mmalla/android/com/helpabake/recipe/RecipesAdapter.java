@@ -1,4 +1,4 @@
-package mmalla.android.com.helpabake;
+package mmalla.android.com.helpabake.recipe;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,20 +7,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.ArrayList;
+
+import mmalla.android.com.helpabake.R;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<Recipe> recipeList;
+    private ArrayList<Recipe> recipeList;
     private final RecipesAdapter.RecipesAdapterOnClickListener mListener;
 
 
-    public interface RecipesAdapterOnClickListener{
+    public interface RecipesAdapterOnClickListener {
         void onClick(Recipe recipe);
     }
 
-    public RecipesAdapter(Context context, List<Recipe> recipeList, RecipesAdapter.RecipesAdapterOnClickListener listener) {
+    public RecipesAdapter(Context context, ArrayList<Recipe> recipeList, RecipesAdapter.RecipesAdapterOnClickListener listener) {
         mListener = listener;
         this.recipeList = recipeList;
         mContext = context;
@@ -48,7 +50,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.MyViewHo
         Recipe recipe = recipeList.get(holder.getAdapterPosition());
 
         TextView recipeNameTextView = (TextView) holder.mTextView.findViewById(R.id.recipe_name);
-        recipeNameTextView.setText(recipe.getRecipeName());
+        recipeNameTextView.setText(recipe.getName());
         recipeNameTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

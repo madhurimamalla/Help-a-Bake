@@ -1,4 +1,4 @@
-package mmalla.android.com.helpabake;
+package mmalla.android.com.helpabake.videoplayer;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -30,6 +30,8 @@ import com.google.android.exoplayer2.util.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mmalla.android.com.helpabake.R;
+import mmalla.android.com.helpabake.recipe.Recipe;
 import mmalla.android.com.helpabake.recipestep.RecipeStep;
 import timber.log.Timber;
 
@@ -78,6 +80,9 @@ public class VideoPlayerFragment extends Fragment {
         componentListener = new ComponentListener();
 
         Timber.d("URL for the recipe step is: " + recipeStep.getVideoURL());
+        if(recipeStep.getVideoURL().isEmpty() && !recipeStep.getThumbnailURL().isEmpty()){
+            recipeStep.setVideoURL(recipeStep.getThumbnailURL());
+        }
         return view;
     }
 

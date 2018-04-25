@@ -1,4 +1,4 @@
-package mmalla.android.com.helpabake;
+package mmalla.android.com.helpabake.recipe;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,13 +8,18 @@ import java.util.ArrayList;
 import mmalla.android.com.helpabake.ingredient.Ingredient;
 import mmalla.android.com.helpabake.recipestep.RecipeStep;
 
-public class Recipe implements Parcelable{
-
+public class Recipe implements Parcelable {
+    
     private int id;
-    private String recipeName;
+
+    private String name;
+
     private ArrayList<Ingredient> ingredients;
+
     private ArrayList<RecipeStep> steps;
+
     private int servings;
+
     private String image;
 
     public Recipe() {
@@ -22,7 +27,7 @@ public class Recipe implements Parcelable{
 
     public Recipe(int id, String recipeName, ArrayList<Ingredient> ingredients, ArrayList<RecipeStep> steps, int servings, String image) {
         this.id = id;
-        this.recipeName = recipeName;
+        this.name = recipeName;
         this.ingredients = ingredients;
         this.steps = steps;
         this.servings = servings;
@@ -31,7 +36,7 @@ public class Recipe implements Parcelable{
 
     protected Recipe(Parcel in) {
         id = in.readInt();
-        recipeName = in.readString();
+        name = in.readString();
         ingredients = in.createTypedArrayList(Ingredient.CREATOR);
         steps = in.createTypedArrayList(RecipeStep.CREATOR);
         servings = in.readInt();
@@ -58,12 +63,12 @@ public class Recipe implements Parcelable{
         this.id = id;
     }
 
-    public String getRecipeName() {
-        return recipeName;
+    public String getName() {
+        return name;
     }
 
-    public void setRecipeName(String recipeName) {
-        this.recipeName = recipeName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public ArrayList<Ingredient> getIngredients() {
@@ -106,7 +111,7 @@ public class Recipe implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
-        dest.writeString(recipeName);
+        dest.writeString(name);
         dest.writeTypedList(ingredients);
         dest.writeTypedList(steps);
         dest.writeInt(servings);

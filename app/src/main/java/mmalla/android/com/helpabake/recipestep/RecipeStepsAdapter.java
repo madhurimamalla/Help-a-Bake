@@ -14,10 +14,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mmalla.android.com.helpabake.R;
-import mmalla.android.com.helpabake.Recipe;
+import mmalla.android.com.helpabake.recipe.Recipe;
 import mmalla.android.com.helpabake.RecipeDetailsActivity;
-import mmalla.android.com.helpabake.RecipeStepDetailActivity;
-import mmalla.android.com.helpabake.RecipeStepDetailFragment;
 
 public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.MyStepsViewHolder> {
 

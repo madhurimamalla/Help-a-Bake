@@ -9,4 +9,9 @@
     <string name="ingredients_list">Ingredients list</string>
     <string name="recipe_steps">Recipe steps</string>
     <string name="long_recipe_description">Recipe\'s long description go here: 6. Pour the filling into the prepared crust and smooth the top. Spread the whipped cream over the filling. Refrigerate the pie for at least 2 hours. Then it\'s ready to serve!</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
+    <string name="there_are_no_recipes">There are no recipes</string>
+    <string name="no_recipes_widget">There are no recipes!</string>
 </resources>

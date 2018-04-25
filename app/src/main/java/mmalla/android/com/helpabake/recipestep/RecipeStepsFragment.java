@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import mmalla.android.com.helpabake.R;
-import mmalla.android.com.helpabake.Recipe;
+import mmalla.android.com.helpabake.recipe.Recipe;
 import mmalla.android.com.helpabake.RecipeDetailsActivity;
 
 public class RecipeStepsFragment extends Fragment {

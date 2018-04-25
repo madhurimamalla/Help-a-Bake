@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import mmalla.android.com.helpabake.ingredient.Ingredient;
-import mmalla.android.com.helpabake.Recipe;
+import mmalla.android.com.helpabake.recipe.Recipe;
 import mmalla.android.com.helpabake.recipestep.RecipeStep;
 
 public class RecipeDetailsUtil {
@@ -76,13 +76,13 @@ public class RecipeDetailsUtil {
 
             if (ingredientsArray.length() == 0) {
                 String noIngredientStr = "No ingredients are found for this.";
-                int noQuantity = 0;
+                Double noQuantity = 0.0;
                 Ingredient ingredient = new Ingredient(noQuantity, noIngredientStr, noIngredientStr);
                 ingredientList.add(ingredient);
             } else {
                 for (int k = 0; k < ingredientsArray.length(); k++) {
                     JSONObject ingredientObj = (JSONObject) ingredientsArray.getJSONObject(k);
-                    int quantity = ingredientObj.getInt(INGREDIENTS_QUANTITY);
+                    Double quantity = ingredientObj.getDouble(INGREDIENTS_QUANTITY);
                     String measure = ingredientObj.getString(INGREDIENTS_MEASURE);
                     String ingredient = ingredientObj.getString(INGREDIENTS_INGREDIENT);
                     Ingredient ingredient1 = new Ingredient(quantity, measure, ingredient);

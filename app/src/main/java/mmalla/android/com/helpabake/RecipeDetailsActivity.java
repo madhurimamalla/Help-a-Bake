@@ -10,7 +10,9 @@ import java.util.ArrayList;
 
 import mmalla.android.com.helpabake.ingredient.Ingredient;
 import mmalla.android.com.helpabake.ingredient.IngredientsListFragment;
+import mmalla.android.com.helpabake.recipe.Recipe;
 import mmalla.android.com.helpabake.recipestep.RecipeStep;
+import mmalla.android.com.helpabake.recipestep.RecipeStepDetailFragment;
 import mmalla.android.com.helpabake.recipestep.RecipeStepsFragment;
 import timber.log.Timber;
 
@@ -18,6 +20,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     public static final String RECIPE_EXTRA_INTENT = "RECIPE_EXTRA_INTENT";
     public static final String RECIPE_STEP = "RECIPE_STEP";
+    public static final String RECIPE_NUMBER = "RECIPE_NUMBER";
     public Recipe recipe;
     public RecipeStep recipeStep;
 
@@ -42,8 +45,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
              */
             Intent previousIntent = getIntent();
             recipe = previousIntent.getParcelableExtra(RECIPE_EXTRA_INTENT);
-            Timber.d("Recipe name: " + recipe.getRecipeName());
-            Toast.makeText(this, "Recipe clicked is " + recipe.getRecipeName(), Toast.LENGTH_SHORT).show();
+            Timber.d("Recipe name: " + recipe.getName());
+            Toast.makeText(this, "Recipe clicked is " + recipe.getName(), Toast.LENGTH_SHORT).show();
         }
 
         if (findViewById(R.id.linear_layout_to_verify) != null) {
@@ -81,7 +84,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
              */
             recipeStep = recipe.getSteps().get(0);
             bundle.putParcelable(RECIPE_STEP, recipeStep);
-            bundle.putParcelable(RECIPE_EXTRA_INTENT, recipe);
             RecipeStepDetailFragment recipeStepDetailFragment = new RecipeStepDetailFragment();
             recipeStepDetailFragment.setArguments(bundle);
             /**
