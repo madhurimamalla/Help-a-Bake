@@ -19,6 +19,7 @@ import mmalla.android.com.helpabake.recipe.Recipe;
 import mmalla.android.com.helpabake.recipe.RecipesAdapter;
 import mmalla.android.com.helpabake.retrofit.RecipeBuilder;
 import mmalla.android.com.helpabake.retrofit.RecipeService;
+import mmalla.android.com.helpabake.roomdatabase.RecipesDatabase;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     private RecipesAdapter recipesAdapter;
     private GridLayoutManager mLayoutManager;
     private ArrayList<Recipe> recipesList;
+
+    private RecipesDatabase recipesDatabase;
 
     private static final String RECIPE_LIST_SAVE_INSTANCE = "recipe_list";
     private static final String RECIPE_EXTRA_INTENT = "RECIPE_EXTRA_INTENT";
@@ -73,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        recipesDatabase = RecipesDatabase.getDatabase(getApplicationContext());
+
         /**
          * Retrieve the list of recipes
          */
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     }
 
     public void getRecipesFromNetwork() {
-        RecipeService recipeService = RecipeBuilder.retrieve();
+        final RecipeService recipeService = RecipeBuilder.retrieve();
         final Call<ArrayList<Recipe>> recipe = recipeService.loadRecipesFromServer();
 
         //SimpleIdlingResource idlingResource = (SimpleIdlingResource)((MainActivity)getActivity()).getIdlingResource();
@@ -98,8 +103,26 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
                 Timber.d("status code: ", statusCode.toString());
 
                 ArrayList<Recipe> recipes = response.body();
+                showLoading();
 
                 recipesList = recipes;
+                showRecipesList(recipes);
+
+                recipesDatabase.recipeDao().insertRecipes(recipes);
+
+                for (Recipe recipe : recipes) {
+                    for (int i = 0; i < recipe.getIngredients().size(); i++) {
+                        recipe.getIngredients().get(i).setRecipeId(recipe.getId());
+                    }
+
+                    for (int i = 0; i < recipe.getSteps().size(); i++) {
+                        recipe.getSteps().get(i).set_recipeId(recipe.getId());
+                    }
+
+                    recipesDatabase.recipeDao().insertIngredients(recipe.getIngredients());
+                    recipesDatabase.recipeDao().insertSteps(recipe.getSteps());
+                }
+                Timber.d("The recipes are saved in the Database via Room");
 
                 showRecipesList(recipes);
 
@@ -114,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
             @Override
             public void onFailure(Call<ArrayList<Recipe>> call, Throwable t) {
                 Timber.d("http fail: ", t.getMessage());
+                showErrorMessage();
             }
         });
     }

@@ -7,11 +7,12 @@ import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mmalla.android.com.helpabake.MainActivity;
 import mmalla.android.com.helpabake.R;
+import mmalla.android.com.helpabake.recipe.Recipe;
+import mmalla.android.com.helpabake.roomdatabase.RecipesDatabase;
 
 /**
  * TODO Need to add the code to add custom recipe
@@ -20,10 +21,10 @@ import mmalla.android.com.helpabake.R;
 
 public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory {
 
-    List<String> collection = new ArrayList<String>();
+    List<Recipe> recipes;
+
     Context mContext;
     Intent mIntent;
-
 
 
     public WidgetDataProvider(Context mContext, Intent mIntent) {
@@ -31,21 +32,14 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
         this.mIntent = mIntent;
     }
 
-    private void initData() {
-        collection.clear();
-        for (int i = 0; i <= 10; i++) {
-            collection.add("ListView " + i);
-        }
-    }
-
     @Override
     public void onCreate() {
-        initData();
+        recipes = RecipesDatabase.getDatabase(mContext).recipeDao().getRecipes();
     }
 
     @Override
     public void onDataSetChanged() {
-        initData();
+        recipes = RecipesDatabase.getDatabase(mContext).recipeDao().getRecipes();
     }
 
     @Override
@@ -55,14 +49,14 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public int getCount() {
-        return collection.size();
+        return recipes.size();
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
         RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_item_row);
 
-        String text = collection.get(position);
+        String text = recipes.get(position).getName();
 
         remoteViews.setTextViewText(R.id.recipe_name, text);
         remoteViews.setTextColor(R.id.recipe_name, Color.BLACK);

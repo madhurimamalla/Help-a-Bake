@@ -1,14 +1,32 @@
 package mmalla.android.com.helpabake.ingredient;
 
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import mmalla.android.com.helpabake.recipe.Recipe;
+
+@Entity(tableName = "ingredient",
+        foreignKeys = @ForeignKey(entity = Recipe.class,
+                parentColumns = "id",
+                childColumns = "recipeId",
+                onDelete = ForeignKey.CASCADE))
 public class Ingredient implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private int id;
+    private int recipeId;
     private Double quantity;
     private String measure;
     private String ingredient;
+
+    public Ingredient() {
+    }
 
     public Ingredient(Double id, String measure, String ingredient) {
         this.quantity = id;
@@ -20,6 +38,22 @@ public class Ingredient implements Parcelable {
         quantity = in.readDouble();
         measure = in.readString();
         ingredient = in.readString();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
     }
 
     public static final Creator<Ingredient> CREATOR = new Creator<Ingredient>() {

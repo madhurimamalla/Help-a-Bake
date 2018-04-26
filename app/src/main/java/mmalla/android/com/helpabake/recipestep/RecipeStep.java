@@ -1,21 +1,35 @@
 package mmalla.android.com.helpabake.recipestep;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class RecipeStep implements Parcelable{
+import mmalla.android.com.helpabake.recipe.Recipe;
 
-    private int id;
+@Entity(tableName = "recipestep",
+        foreignKeys = @ForeignKey(entity = Recipe.class,
+                parentColumns = "id",
+                childColumns = "_recipeId",
+                onDelete = ForeignKey.CASCADE))
+public class RecipeStep implements Parcelable {
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private int _id;
+    private int _recipeId;
     private String shortDescription;
     private String description;
     private String videoURL;
     private String thumbnailURL;
 
-    public RecipeStep(){
+    public RecipeStep() {
     }
 
     public RecipeStep(int id, String shortDescription, String description, String videoURL, String thumbnailURL) {
-        this.id = id;
+        this._id = id;
         this.shortDescription = shortDescription;
         this.description = description;
         this.videoURL = videoURL;
@@ -23,11 +37,27 @@ public class RecipeStep implements Parcelable{
     }
 
     protected RecipeStep(Parcel in) {
-        id = in.readInt();
+        _id = in.readInt();
         shortDescription = in.readString();
         description = in.readString();
         videoURL = in.readString();
         thumbnailURL = in.readString();
+    }
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
+    }
+
+    public int get_recipeId() {
+        return _recipeId;
+    }
+
+    public void set_recipeId(int _recipeId) {
+        this._recipeId = _recipeId;
     }
 
     public static final Creator<RecipeStep> CREATOR = new Creator<RecipeStep>() {
@@ -41,14 +71,6 @@ public class RecipeStep implements Parcelable{
             return new RecipeStep[size];
         }
     };
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getShortDescription() {
         return shortDescription;
@@ -89,7 +111,7 @@ public class RecipeStep implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeInt(_id);
         dest.writeString(shortDescription);
         dest.writeString(description);
         dest.writeString(videoURL);

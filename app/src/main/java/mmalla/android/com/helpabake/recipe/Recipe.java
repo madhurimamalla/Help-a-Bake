@@ -1,5 +1,8 @@
 package mmalla.android.com.helpabake.recipe;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,19 +11,20 @@ import java.util.ArrayList;
 import mmalla.android.com.helpabake.ingredient.Ingredient;
 import mmalla.android.com.helpabake.recipestep.RecipeStep;
 
+@Entity
 public class Recipe implements Parcelable {
-    
+
+    @PrimaryKey
     private int id;
-
     private String name;
-
-    private ArrayList<Ingredient> ingredients;
-
-    private ArrayList<RecipeStep> steps;
-
     private int servings;
-
     private String image;
+
+    @Ignore
+    private ArrayList<Ingredient> ingredients = null;
+
+    @Ignore
+    private ArrayList<RecipeStep> steps = null;
 
     public Recipe() {
     }
