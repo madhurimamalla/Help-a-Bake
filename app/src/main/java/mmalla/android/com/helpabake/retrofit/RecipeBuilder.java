@@ -12,21 +12,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public final class RecipeBuilder {
 
-    static RecipeService recipeService;
+    static RemoteRecipeService remoteRecipeService;
+    public static final String ENDPOINT = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/";
 
-    public static RecipeService retrieve(){
+    public static RemoteRecipeService retrieve(){
         Gson gson = new GsonBuilder().create();
 
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
 
-
-        recipeService = new Retrofit.Builder()
-                .baseUrl("https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/")
+        remoteRecipeService = new Retrofit.Builder()
+                .baseUrl(ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .callFactory(httpClientBuilder.build())
-                .build().create(RecipeService.class);
+                .build().create(RemoteRecipeService.class);
 
-        return recipeService;
+        return remoteRecipeService;
     }
 
 }

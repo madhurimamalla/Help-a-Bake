@@ -9,15 +9,10 @@ import android.widget.RemoteViewsService;
 
 import java.util.List;
 
-import mmalla.android.com.helpabake.MainActivity;
 import mmalla.android.com.helpabake.R;
+import mmalla.android.com.helpabake.RecipeDetailsActivity;
 import mmalla.android.com.helpabake.recipe.Recipe;
-import mmalla.android.com.helpabake.roomdatabase.RecipesDatabase;
-
-/**
- * TODO Need to add the code to add custom recipe
- * and figure out how to do that
- */
+import mmalla.android.com.helpabake.recipe.RecipeController;
 
 public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory {
 
@@ -26,20 +21,23 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     Context mContext;
     Intent mIntent;
 
+    RecipeController recipeController;
+
 
     public WidgetDataProvider(Context mContext, Intent mIntent) {
         this.mContext = mContext;
         this.mIntent = mIntent;
+        this.recipeController = new RecipeController(mContext);
     }
 
     @Override
     public void onCreate() {
-        recipes = RecipesDatabase.getDatabase(mContext).recipeDao().getRecipes();
+        recipes = recipeController.fetchRecipesFromCache();
     }
 
     @Override
     public void onDataSetChanged() {
-        recipes = RecipesDatabase.getDatabase(mContext).recipeDao().getRecipes();
+        recipes = recipeController.fetchRecipesFromCache();
     }
 
     @Override
@@ -61,8 +59,9 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
         remoteViews.setTextViewText(R.id.recipe_name, text);
         remoteViews.setTextColor(R.id.recipe_name, Color.BLACK);
 
+
         Bundle extras = new Bundle();
-        extras.putString(MainActivity.RECIPE_NAME_FROM_WIDGET, text);
+        extras.putInt(RecipeDetailsActivity.RECIPE_ID_FROM_WIDGET, recipes.get(position).getId());
         Intent fillInIntent = new Intent();
         fillInIntent.putExtras(extras);
         remoteViews.setOnClickFillInIntent(R.id.recipe_name, fillInIntent);

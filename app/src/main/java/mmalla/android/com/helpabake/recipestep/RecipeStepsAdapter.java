@@ -9,17 +9,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mmalla.android.com.helpabake.R;
-import mmalla.android.com.helpabake.recipe.Recipe;
 import mmalla.android.com.helpabake.RecipeDetailsActivity;
+import mmalla.android.com.helpabake.recipe.Recipe;
 
 public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.MyStepsViewHolder> {
 
-    private ArrayList<RecipeStep> mList;
+    private List<RecipeStep> mList;
     private Recipe recipe;
     private boolean mTwoPane;
     public static final String RECIPE_STEP = "RECIPE_STEP";
@@ -38,7 +38,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     }
 
 
-    public RecipeStepsAdapter(RecipeDetailsActivity mParentActivity, ArrayList<RecipeStep> mList, Recipe recipe, boolean twoPane) {
+    public RecipeStepsAdapter(RecipeDetailsActivity mParentActivity, List<RecipeStep> mList, Recipe recipe, boolean twoPane) {
         this.mList = mList;
         this.recipe = recipe;
         this.mTwoPane = twoPane;

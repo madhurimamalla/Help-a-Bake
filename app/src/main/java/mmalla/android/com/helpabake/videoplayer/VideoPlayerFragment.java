@@ -81,7 +81,7 @@ public class VideoPlayerFragment extends Fragment {
 
         Timber.d("URL for the recipe step is: " + recipeStep.getVideoURL());
         if(recipeStep.getVideoURL().isEmpty() && !recipeStep.getThumbnailURL().isEmpty()){
-            recipeStep.setVideoURL(recipeStep.getThumbnailURL());
+            recipeStep.setVideoURL(recipeStep.getThumbnailURL().trim());
         }
         return view;
     }

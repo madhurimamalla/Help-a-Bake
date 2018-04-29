@@ -7,14 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import mmalla.android.com.helpabake.R;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.MyViewHolder> {
 
     private Context mContext;
-    private ArrayList<Recipe> recipeList;
+    private List<Recipe> recipeList;
     private final RecipesAdapter.RecipesAdapterOnClickListener mListener;
 
 
@@ -22,7 +22,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.MyViewHo
         void onClick(Recipe recipe);
     }
 
-    public RecipesAdapter(Context context, ArrayList<Recipe> recipeList, RecipesAdapter.RecipesAdapterOnClickListener listener) {
+    public RecipesAdapter(Context context, List<Recipe> recipeList, RecipesAdapter.RecipesAdapterOnClickListener listener) {
         mListener = listener;
         this.recipeList = recipeList;
         mContext = context;

@@ -16,7 +16,8 @@
             android:background="@color/colorPrimary"
             android:orientation="horizontal"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+            android:paddingRight="5dp"
+            android:padding="16dp">
 
             <ImageView
                 android:id="@+id/widget_img_launcher"
@@ -24,11 +25,10 @@
                 android:layout_height="@dimen/image_widget_header_height"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="@dimen/image_widget_margin"
-                android:layout_weight="1"
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:paddingEnd="@dimen/widget_header_padding"
@@ -36,18 +36,10 @@
                 android:paddingRight="@dimen/widget_header_padding"
                 android:paddingStart="@dimen/widget_header_padding"
                 android:text="@string/help_a_bake_widget_header"
-                android:gravity="center"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white"
-                android:layout_weight="2"
                 android:textStyle="bold" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"
-                android:layout_weight="1"
-                android:text="Open app" />
         </LinearLayout>
 
         <GridView

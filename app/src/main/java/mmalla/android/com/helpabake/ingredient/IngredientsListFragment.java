@@ -3,6 +3,7 @@ package mmalla.android.com.helpabake.ingredient;
 import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,12 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mmalla.android.com.helpabake.R;
 
 public class IngredientsListFragment extends Fragment {
 
-    private ArrayList listOfIngredients;
+    private List<Ingredient> listOfIngredients;
     public static final String INGREDIENTS_LIST = "INGREDIENTS_LIST";
 
     public IngredientsListFragment() {
@@ -26,7 +28,7 @@ public class IngredientsListFragment extends Fragment {
          */
     }
 
-    public void setIngredientsList(ArrayList<Ingredient> ingredients){
+    public void setIngredientsList(List<Ingredient> ingredients){
         this.listOfIngredients = ingredients;
     }
 
@@ -54,6 +56,6 @@ public class IngredientsListFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(INGREDIENTS_LIST, listOfIngredients);
+        outState.putParcelableArrayList(INGREDIENTS_LIST, new ArrayList<Ingredient>(listOfIngredients));
     }
 }

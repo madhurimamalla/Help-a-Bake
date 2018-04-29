@@ -12,17 +12,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mmalla.android.com.helpabake.recipe.Recipe;
+import mmalla.android.com.helpabake.recipe.RecipeController;
 import mmalla.android.com.helpabake.recipe.RecipesAdapter;
-import mmalla.android.com.helpabake.retrofit.RecipeBuilder;
-import mmalla.android.com.helpabake.retrofit.RecipeService;
-import mmalla.android.com.helpabake.roomdatabase.RecipesDatabase;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements RecipesAdapter.RecipesAdapterOnClickListener {
@@ -36,14 +32,13 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
 
     private RecipesAdapter recipesAdapter;
     private GridLayoutManager mLayoutManager;
-    private ArrayList<Recipe> recipesList;
+    private List<Recipe> recipesList = new ArrayList<Recipe>();
 
-    private RecipesDatabase recipesDatabase;
+    private RecipeController controller;
 
     private static final String RECIPE_LIST_SAVE_INSTANCE = "recipe_list";
     private static final String RECIPE_EXTRA_INTENT = "RECIPE_EXTRA_INTENT";
     private static final int SCALING_FACTOR = 360;
-    public static final String RECIPE_NAME_FROM_WIDGET = "RECIPE_NAME";
     private String ALL_RECIPES = "ALL_RECIPES";
 
     /**
@@ -76,73 +71,34 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        recipesDatabase = RecipesDatabase.getDatabase(getApplicationContext());
+        controller = new RecipeController(getApplicationContext());
 
         /**
          * Retrieve the list of recipes
          */
         if (savedInstanceState != null) {
-            recipesList = savedInstanceState.getParcelableArrayList(RECIPE_LIST_SAVE_INSTANCE);
+            recipesList.clear();
+            recipesList.addAll(savedInstanceState.<Recipe> getParcelableArrayList(RECIPE_LIST_SAVE_INSTANCE));
             showRecipesList(recipesList);
         } else {
-            getRecipesFromNetwork();
-        }
 
-    }
+            controller.fetchRecipes(new RecipeController.FetchRecipesCallback() {
 
-    public void getRecipesFromNetwork() {
-        final RecipeService recipeService = RecipeBuilder.retrieve();
-        final Call<ArrayList<Recipe>> recipe = recipeService.loadRecipesFromServer();
-
-        //SimpleIdlingResource idlingResource = (SimpleIdlingResource)((MainActivity)getActivity()).getIdlingResource();
-
-        recipe.enqueue(new Callback<ArrayList<Recipe>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Recipe>> call, Response<ArrayList<Recipe>> response) {
-                Integer statusCode = response.code();
-                Timber.d("status code: ", statusCode.toString());
-
-                ArrayList<Recipe> recipes = response.body();
-                showLoading();
-
-                recipesList = recipes;
-                showRecipesList(recipes);
-
-                recipesDatabase.recipeDao().insertRecipes(recipes);
-
-                for (Recipe recipe : recipes) {
-                    for (int i = 0; i < recipe.getIngredients().size(); i++) {
-                        recipe.getIngredients().get(i).setRecipeId(recipe.getId());
-                    }
-
-                    for (int i = 0; i < recipe.getSteps().size(); i++) {
-                        recipe.getSteps().get(i).set_recipeId(recipe.getId());
-                    }
-
-                    recipesDatabase.recipeDao().insertIngredients(recipe.getIngredients());
-                    recipesDatabase.recipeDao().insertSteps(recipe.getSteps());
+                @Override
+                public void onSuccess(List<Recipe> recipes) {
+                    recipesList.addAll(recipes);
+                    showRecipesList(recipes);
                 }
-                Timber.d("The recipes are saved in the Database via Room");
 
-                showRecipesList(recipes);
-
-                Timber.d("The recipe list is retrieved via Retrofit!");
-                Bundle recipesBundle = new Bundle();
-                recipesBundle.putParcelableArrayList(ALL_RECIPES, recipes);
-//                if (idlingResource != null) {
-//                    idlingResource.setIdleState(true);
-//                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Recipe>> call, Throwable t) {
-                Timber.d("http fail: ", t.getMessage());
-                showErrorMessage();
-            }
-        });
+                @Override
+                public void onFailure(Throwable t) {
+                    showErrorMessage(t.getMessage());
+                }
+            });
+        }
     }
 
-    public void showRecipesList(ArrayList<Recipe> recipesList) {
+    public void showRecipesList(List<Recipe> recipesList) {
         recipesAdapter = new RecipesAdapter(this, recipesList, this);
         recyclerView.setAdapter(recipesAdapter);
         showRecipes();
@@ -154,9 +110,10 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         recyclerView.setVisibility(View.VISIBLE);
     }
 
-    public void showErrorMessage() {
+    public void showErrorMessage(String errorText) {
         recyclerView.setVisibility(View.INVISIBLE);
         mErrorMessage.setVisibility(View.VISIBLE);
+        mErrorMessage.setText(errorText);
     }
 
     private void showLoading() {
@@ -174,61 +131,9 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         startActivity(recipeStepsIntent);
     }
 
-//    private class FetchRecipesList extends AsyncTask<String, Void, List<Recipe>> {
-//
-//        @Override
-//        protected void onPreExecute() {
-//            showLoading();
-//        }
-//
-//        @Override
-//        protected List<Recipe> doInBackground(String... strings) {
-//            /**
-//             * Read from a local asset file / Read from an API making a network call
-//             */
-//            try {
-//                String jsonStr = AssetJSONFile(getResources().getString(R.string.baking_asset), getApplicationContext());
-//                recipesList = RecipeDetailsUtil.getRecipesFromJson(jsonStr);
-//                Timber.d("The recipe list is retrieved");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                showErrorMessage();
-//            }
-//            return recipesList;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(List<Recipe> recipeList) {
-//            if (recipeList != null) {
-//                mErrorMessage.setVisibility(View.INVISIBLE);
-//                //showRecipesList();
-//            } else {
-//                showLoading();
-//            }
-//        }
-//    }
-
-//    /**
-//     * Description: Util to retrieve the list of recipes from
-//     * a local assets json file
-//     *
-//     * @param filename
-//     * @param context
-//     * @return
-//     * @throws IOException
-//     */
-//    public static String AssetJSONFile(String filename, Context context) throws IOException {
-//        AssetManager manager = context.getAssets();
-//        InputStream file = manager.open(filename);
-//        byte[] formArray = new byte[file.available()];
-//        file.read(formArray);
-//        file.close();
-//        return new String(formArray);
-//    }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList(RECIPE_LIST_SAVE_INSTANCE, recipesList);
-        super.onSaveInstanceState(outState);
+            outState.putParcelableArrayList(RECIPE_LIST_SAVE_INSTANCE, new ArrayList<Recipe>(recipesList));
+            super.onSaveInstanceState(outState);
     }
 }

@@ -1,6 +1,6 @@
 package mmalla.android.com.helpabake.retrofit;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import mmalla.android.com.helpabake.recipe.Recipe;
 import retrofit2.Call;
@@ -8,10 +8,10 @@ import retrofit2.http.GET;
 
 
 /**
- * RecipeService uses Retrofit to get the data from the internet
+ * RemoteRecipeService uses Retrofit to get the data from the internet
  */
-public interface RecipeService {
+public interface RemoteRecipeService {
 
     @GET("baking.json")
-    Call<ArrayList<Recipe>> loadRecipesFromServer();
+    Call<List<Recipe>> loadRecipesFromServer();
 }

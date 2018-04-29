@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,10 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mmalla.android.com.helpabake.R;
-import mmalla.android.com.helpabake.recipe.Recipe;
 import mmalla.android.com.helpabake.RecipeDetailsActivity;
+import mmalla.android.com.helpabake.recipe.Recipe;
 
 public class RecipeStepsFragment extends Fragment {
 
@@ -24,7 +26,7 @@ public class RecipeStepsFragment extends Fragment {
     public static final String RECIPE_EXTRA_INTENT = "RECIPE_EXTRA_INTENT";
     public static final String RECIPE_PARCELABLE = "RECIPE_PARCELABLE";
     public static final String RECIPE_STEP = "RECIPE_STEP";
-    public ArrayList<RecipeStep> recipeSteps;
+    public List<RecipeStep> recipeSteps;
     public RecipeDetailsActivity mParentActivity;
     public Recipe recipe;
     public Context mContext;
@@ -60,7 +62,7 @@ public class RecipeStepsFragment extends Fragment {
         return rootView;
     }
 
-    public void setRecipeStepList(ArrayList<RecipeStep> recipeStepList) {
+    public void setRecipeStepList(List<RecipeStep> recipeStepList) {
         this.recipeSteps = recipeStepList;
     }
 
@@ -79,7 +81,7 @@ public class RecipeStepsFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(RECIPE_STEP_LIST, recipeSteps);
+        outState.putParcelableArrayList(RECIPE_STEP_LIST, new ArrayList<RecipeStep>(recipeSteps));
         outState.putParcelable(RECIPE_PARCELABLE, recipe);
     }
 

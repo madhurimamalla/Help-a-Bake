@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +16,7 @@ import timber.log.Timber;
 
 public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsListAdapter.MyViewHolder> {
 
-    private ArrayList<Ingredient> mList;
+    private List<Ingredient> mList;
     private Context mContext;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -39,7 +37,7 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
         }
     }
 
-    public IngredientsListAdapter(ArrayList<Ingredient> list, Context context) {
+    public IngredientsListAdapter(List<Ingredient> list, Context context) {
         mList = list;
         mContext = context;
     }
@@ -47,6 +45,7 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
 
     /**
      * Description: Creating a View Holder
+     *
      * @param parent
      * @param viewType
      * @return
@@ -61,6 +60,7 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
 
     /**
      * Description: Binding the data to the views
+     *
      * @param holder
      * @param position
      */
@@ -75,9 +75,7 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
         mMeasureTV.setText(ingredient.getMeasure());
 
         TextView mIngredient = (TextView) holder.mIngredientTextView.findViewById(R.id.ingredient);
-        String ingredientText = ingredient.getIngredient().toString();
-        ingredientText = StringUtils.capitalize(ingredientText);
-        mIngredient.setText(ingredientText);
+        mIngredient.setText(ingredient.getIngredient());
 
         Timber.d("Set up the Quantity as: " + mQuantityTV + " and Measure: " + mMeasureTV
                 + " . Finally, the ingredient is: " + mIngredient + ".");
@@ -85,6 +83,7 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
 
     /**
      * Description: Returning the number of the recipe steps in the list
+     *
      * @return
      */
     @Override

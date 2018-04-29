@@ -11,8 +11,8 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.widget.RemoteViews;
 
-import mmalla.android.com.helpabake.MainActivity;
 import mmalla.android.com.helpabake.R;
+import mmalla.android.com.helpabake.RecipeDetailsActivity;
 import timber.log.Timber;
 
 /**
@@ -36,10 +36,7 @@ public class HelpABakeWidgetProvider extends AppWidgetProvider {
             setRemoteAdapterV11(context, views);
         }
 
-        /**
-         *  TODO Trying to start the correct recipe DetailActivity
-         */
-        Intent appIntent = new Intent(context, MainActivity.class);
+        Intent appIntent = new Intent(context, RecipeDetailsActivity.class);
         PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setPendingIntentTemplate(R.id.widget_grid_view, appPendingIntent);
 
@@ -50,7 +47,6 @@ public class HelpABakeWidgetProvider extends AppWidgetProvider {
     }
 
     /**
-     *
      * @param context
      * @param views
      */
@@ -61,7 +57,6 @@ public class HelpABakeWidgetProvider extends AppWidgetProvider {
     }
 
     /**
-     *
      * @param context
      * @param views
      */
