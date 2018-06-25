@@ -1,0 +1,17 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_header_padding">8dp</dimen>
+    <dimen name="image_widget_header_width">32dp</dimen>
+    <dimen name="image_widget_header_height">32dp</dimen>
+    <dimen name="image_widget_margin">1dp</dimen>
+    <dimen name="widget_item_text_size">20sp</dimen>
+    <dimen name="widget_item_linear_layout_spacing">2dp</dimen>
+    <dimen name="recipe_name_widget_padding">20dp</dimen>
+    <dimen name="widget_recipe_name_size">15sp</dimen>
+</resources>

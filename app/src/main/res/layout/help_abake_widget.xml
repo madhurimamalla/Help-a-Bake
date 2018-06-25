@@ -1,0 +1,73 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/widget_margin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#bbDEDFDE"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/widget_layout_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/widget_img_launcher"
+                android:layout_width="@dimen/image_widget_header_width"
+                android:layout_height="@dimen/image_widget_header_height"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/image_widget_margin"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:paddingEnd="@dimen/widget_header_padding"
+                android:paddingLeft="@dimen/widget_header_padding"
+                android:paddingRight="@dimen/widget_header_padding"
+                android:paddingStart="@dimen/widget_header_padding"
+                android:text="@string/help_a_bake_widget_header"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/widget_grid_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></GridView>
+
+        <RelativeLayout
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/no_recipes_widget"
+                android:textColor="@color/white"
+                android:textSize="@dimen/widget_item_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.2"
+                android:src="@drawable/recipe_step_selection" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</FrameLayout>

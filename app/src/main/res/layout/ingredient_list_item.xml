@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?><!-- TODO Replace this by a table layout -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:text="TextView"
+        android:textAlignment="textStart"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/measure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:text="TextView"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="CUP" />
+
+    <TextView
+        android:id="@+id/ingredient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:text="TextView"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+        app:layout_constraintEnd_toStartOf="@+id/measure"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toEndOf="@+id/quantity"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Butter" />
+</LinearLayout>
