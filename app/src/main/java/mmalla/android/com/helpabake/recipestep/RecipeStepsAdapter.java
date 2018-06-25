@@ -80,7 +80,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
                     /**
                      * Calling the fragment as this is a tablet
                      */
-                    mParentActivity.getFragmentManager().beginTransaction()
+                    mParentActivity.getSupportFragmentManager().beginTransaction()
                             .replace(R.id.recipe_step_detail_fragment, recipeStepDetailFragment).commit();
                 } else {
                     Toast.makeText(v.getContext(), recipeStep.getShortDescription(), Toast.LENGTH_SHORT).show();

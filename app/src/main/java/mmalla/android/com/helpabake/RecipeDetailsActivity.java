@@ -118,7 +118,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             /**
              * Calling the fragment as this is a tablet
              */
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .replace(R.id.recipe_step_detail_fragment, recipeStepDetailFragment).commit();
         }
     }

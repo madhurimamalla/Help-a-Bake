@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/video_not_available_textview"
+            android:id="@+id/video_not_available_textview_pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -27,15 +27,20 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/recipe_step_detail_textview"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@color/card_view_light_accent"
-        android:gravity="center"
-        android:padding="8dp"
-        android:textAlignment="center"
-        tools:text="@string/long_recipe_description" />
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/recipe_step_detail_textview_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@color/card_view_light_accent"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textAlignment="center"
+            tools:text="@string/long_recipe_description" />
+    </LinearLayout>
 </LinearLayout>

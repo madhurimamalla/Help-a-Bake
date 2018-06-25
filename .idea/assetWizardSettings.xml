@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="78" />
+                                                <entry key="scalingPercent" value="51" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -33,10 +33,11 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="ffffff" />
-                                      <entry key="foregroundImage" value="$USER_HOME$/Downloads/noun_980721_cc.png" />
-                                      <entry key="outputName" value="recipe_main" />
+                                      <entry key="backgroundLayerName" value="widget_item_background" />
+                                      <entry key="foregroundImage" value="$USER_HOME$/Downloads/noun_1480268_cc.png" />
+                                      <entry key="foregroundLayerName" value="widget_item_foreground" />
+                                      <entry key="outputName" value="widget_icon_recipe" />
                                     </map>
                                   </option>
                                 </PersistentState>

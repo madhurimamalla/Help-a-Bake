@@ -2,7 +2,7 @@ package mmalla.android.com.helpabake.videoplayer;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;

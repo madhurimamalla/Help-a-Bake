@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import mmalla.android.com.helpabake.R;
 import mmalla.android.com.helpabake.RecipeDetailsActivity;
+import mmalla.android.com.helpabake.RecipeStepDetailsFragmentPagerAdapter;
 import mmalla.android.com.helpabake.recipe.Recipe;
 import timber.log.Timber;
 
@@ -58,19 +60,25 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         Timber.d("Recipe step clicked was: " + recipeStep.getShortDescription());
         Toast.makeText(this, "recipeStep: " + recipeStep.getShortDescription(), Toast.LENGTH_SHORT);
 
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(RECIPE_STEP, recipeStep);
-        bundle.putParcelable(RECIPE_EXTRA_INTENT, recipe);
-        bundle.putBoolean(TWO_PANE, true);
-        RecipeStepDetailFragment recipeStepDetailFragment = new RecipeStepDetailFragment();
-        recipeStepDetailFragment.setArguments(bundle);
-
-        getFragmentManager().beginTransaction()
-                .replace(R.id.recipe_step_detail_fragment, recipeStepDetailFragment).commit();
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable(RECIPE_STEP, recipeStep);
+//        bundle.putParcelable(RECIPE_EXTRA_INTENT, recipe);
+//        bundle.putBoolean(TWO_PANE, true);
+//        RecipeStepDetailFragment recipeStepDetailFragment = new RecipeStepDetailFragment();
+//        recipeStepDetailFragment.setArguments(bundle);
+//
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.recipe_step_detail_fragment, recipeStepDetailFragment).commit();
 
         /**
          * TODO Add requirement to call the next or previous step
          */
+
+        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        RecipeStepDetailsFragmentPagerAdapter adapter = new RecipeStepDetailsFragmentPagerAdapter(getSupportFragmentManager());
+        adapter.recipe(recipe);
+        adapter.recipeStep(recipeStep);
+        pager.setAdapter(adapter);
     }
 
     /**
