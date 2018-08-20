@@ -10,6 +10,8 @@ Your task is to create a Android Baking App that will allow Udacity’s resident
 * Room library
 * ButterKnife
 * Espresso
+* Retrofit
+* Exoplayer
 
 
 
