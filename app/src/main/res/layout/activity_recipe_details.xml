@@ -15,6 +15,7 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1" />
 
     <TextView
+        android:id="@+id/recipe_detail_ingredients_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
