@@ -1,7 +1,6 @@
 # Help A Bake
-This is the third project done as part of Udacity's Android Developer nanodegree. 
 
-## App Description
+## Description
 Your task is to create a Android Baking App that will allow Udacity’s resident baker-in-chief, Miriam, to share her recipes with the world. You will create an app that will allow a user to select a recipe and see video-guided steps for how to complete it. The user can also add to his home screen as a widget for faster access of the recipe.
 
 ### Third party libraries:
