@@ -82,61 +82,9 @@ public class RecipeStepDetailFragment extends Fragment {
         final int position = getThePositionOfRecipeStep(recipeStep, recipe);
         if (position == -1) {
             Timber.d("This recipe step wasn't found in the recipe");
-        } else {
-            /**
-             * Handle the beginning and end of the list first.
-             */
-            if (position == 0) {
-                next = 1;
-                previous = recipe.getSteps().size() - 1;
-            } else if (position == recipe.getSteps().size() - 1) {
-                next = 0;
-                previous = recipe.getSteps().size() - 2;
-            } else {
-                next = position + 1;
-                previous = position - 1;
-            }
         }
 
         playTheVideoIfAnyAndRecipeStepDesc(recipeStep, position, recipe);
-
-//        if (mTwoPane == true) {
-//            /**
-//             * Two buttons code will be here
-//             */
-//            mNextButton.setVisibility(View.VISIBLE);
-//            mPreviousButton.setVisibility(View.VISIBLE);
-//            final int finalNext = next;
-//            mNextButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Timber.d("It's inside the click on previous button");
-//                    // playTheVideoIfAnyAndRecipeStepDesc(recipeStep, finalNext, recipe);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putParcelable(RECIPE_EXTRA_INTENT, recipe);
-//                    bundle.putParcelable(RECIPE_STEP, recipe.getSteps().get(finalNext));
-//                    RecipeStepDetailFragment recipeStepDetailFragment = new RecipeStepDetailFragment();
-//                    recipeStepDetailFragment.setArguments(bundle);
-//                    getFragmentManager().beginTransaction()
-//                            .replace(R.id.recipe_step_detail_fragment, recipeStepDetailFragment).commit();
-//                }
-//            });
-//            final int finalPrevious = previous;
-//            mPreviousButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Timber.d("It's inside the click on next button");
-//                    // playTheVideoIfAnyAndRecipeStepDesc(recipeStep, finalPrevious, recipe);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putParcelable(RECIPE_EXTRA_INTENT, recipe);
-//                    bundle.putParcelable(RECIPE_STEP, recipe.getSteps().get(finalPrevious));
-//                    RecipeStepDetailFragment recipeStepDetailFragment = new RecipeStepDetailFragment();
-//                    recipeStepDetailFragment.setArguments(bundle);
-//                    getFragmentManager().beginTransaction()
-//                            .replace(R.id.recipe_step_detail_fragment, recipeStepDetailFragment).commit();
-//                }
-//            });
-//        }
         return rootView;
     }
 
