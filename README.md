@@ -12,6 +12,14 @@ Your task is to create a Android Baking App that will allow Udacity’s resident
 * Retrofit
 * Exoplayer
 
+### In this project you will:
+
+* Use MediaPlayer/Exoplayer to display videos.
+* Handle error cases in Android.
+* Add a widget to your app experience.
+* Leverage a third-party library in your app.
+* Use Fragments to create a responsive design that works on phones and tablets.
+
 ### Screenshots from the Android app: 
 ## For a phone
 ![phone1](https://user-images.githubusercontent.com/827584/44336043-cb22bf80-a493-11e8-8e3d-1aa24d019153.png)
