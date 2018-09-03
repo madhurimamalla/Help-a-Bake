@@ -19,9 +19,9 @@
             android:id="@+id/video_not_available_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/recipe_step_detail_act_no_vid_container_layout_margin"
             android:gravity="center"
-            android:padding="8dp"
+            android:padding="@dimen/recipe_step_detail_act_no_vid_container_padding"
             android:text="@string/video_not_available"
             android:visibility="invisible" />
 
@@ -31,10 +31,10 @@
         android:id="@+id/recipe_step_detail_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/recipe_step_detail_textview_layout_margin"
         android:background="@color/card_view_light_accent"
         android:gravity="center"
-        android:padding="8dp"
+        android:padding="@dimen/recipe_step_detail_textview_padding"
         android:textAlignment="center"
         tools:text="@string/long_recipe_description" />
 

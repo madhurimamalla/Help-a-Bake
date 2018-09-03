@@ -18,9 +18,9 @@
         android:id="@+id/recipe_detail_ingredients_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
+        android:layout_margin="@dimen/recipe_details_ingredients_title_header_layout_margin"
         android:background="@color/colorAccent"
-        android:padding="4dp"
+        android:padding="@dimen/recipe_details_ingredients_title_header_padding"
         android:text="@string/ingredients_list"
         android:textAlignment="center" />
 
@@ -44,9 +44,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
+        android:layout_margin="@dimen/recipe_details_recipe_steps_header_layout_margin"
         android:background="@color/colorAccent"
-        android:padding="4dp"
+        android:padding="@dimen/recipe_details_recipe_steps_header_padding"
         android:text="@string/recipe_steps"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"

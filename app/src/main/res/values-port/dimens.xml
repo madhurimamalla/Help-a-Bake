@@ -1,4 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="widget_recipe_name_size">15sp</dimen>
+    <dimen name="recipe_details_recipe_steps_header_padding">4dp</dimen>
+    <dimen name="recipe_details_recipe_steps_header_layout_margin">4dp</dimen>
+    <dimen name="recipe_details_ingredients_title_header_layout_margin">4dp</dimen>
+    <dimen name="recipe_details_activity_ingriedients_header_layout_margin">4dp</dimen>
+    <dimen name="recipe_details_activity_ingredients_header_padding">4dp</dimen>
+    <dimen name="recipe_details_activity_recipe_header_layout_margin">4dp</dimen>
+    <dimen name="recipe_details_activity_recipe_header_padding">4dp</dimen>
+    <dimen name="video_not_available_textview_pager_layout_margin">8dp</dimen>
+    <dimen name="video_not_available_textview_pager_padding">8dp</dimen>
+    <dimen name="recipe_step_detail_textview_pager_layout_margin">8dp</dimen>
+    <dimen name="recipe_step_detail_textview_pager_padding">8dp</dimen>
+    <dimen name="Configure_marginBottom">8dp</dimen>
+    <dimen name="Add_Widget_layout_marginTop">8dp</dimen>
+    <dimen name="ingredient_list_item_quantity_paddingLeft">4dp</dimen>
+    <dimen name="ingredient_list_item_quantity_paddingRight">4dp</dimen>
+    <dimen name="ingredient_list_item_measure_paddingLeft">4dp</dimen>
+    <dimen name="ingredient_list_item_measure_paddingRight">4dp</dimen>
+    <dimen name="ingredient_list_item_ingredient_paddingLeft">4dp</dimen>
+    <dimen name="ingredient_list_item_ingredient_paddingRight">4dp</dimen>
+    <dimen name="ingredients_list_frag_padding">8dp</dimen>
+    <dimen name="recipe_list_row_layout_margin">8dp</dimen>
+    <dimen name="recipe_list_row_ingredient_padding">16dp</dimen>
+    <dimen name="recipe_step_detail_act_no_vid_container_layout_margin">8dp</dimen>
+    <dimen name="recipe_step_detail_act_no_vid_container_padding">8dp</dimen>
+    <dimen name="recipe_step_detail_textview_layout_margin">8dp</dimen>
+    <dimen name="recipe_step_detail_textview_padding">8dp</dimen>
+    <dimen name="recipe_step_list_item_imageView2_layout_margin">2dp</dimen>
+    <dimen name="recipe_step_list_item_layout_marginBottom">8dp</dimen>
+    <dimen name="recipe_step_list_item_recipeStepDesc_layout_marginEnd">8dp</dimen>
+    <dimen name="recipe_step_list_item_recipeStepDesc_layout_marginLeft">8dp</dimen>
+    <dimen name="recipe_step_list_item_recipeStepDesc_layout_marginRight">8dp</dimen>
+    <dimen name="recipe_step_list_item_recipeStepDesc_layout_marginStart">8dp</dimen>
+    <dimen name="recipe_step_list_item_recipeStepDesc_layout_marginTop">8dp</dimen>
+    <dimen name="recipe_step_list_item_recipeStepDesc_Padding">16dp</dimen>
+    <dimen name="recipe_steps_frag_recyclerview_padding">8dp</dimen>
+
 </resources>
