@@ -30,4 +30,4 @@ Your task is to create a Android Baking App that will allow Udacity’s resident
 ![tablet2](https://user-images.githubusercontent.com/827584/44336169-3ec4cc80-a494-11e8-833b-74be3791806a.png)
 ![tablet3](https://user-images.githubusercontent.com/827584/44336170-3ec4cc80-a494-11e8-91c9-c177cc5d8229.png)
 ![tablet4](https://user-images.githubusercontent.com/827584/44336172-3ec4cc80-a494-11e8-8d86-d413bdceff62.png)
-![tablet5](https://user-images.githubusercontent.com/827584/44336174-3ec4cc80-a494-11e8-840d-7dd9eab74fd3.png)
+![tablet5](https://user-images.githubusercontent.com/827584/44980871-ad268600-af8e-11e8-839a-e8a92bf24bab.png)
