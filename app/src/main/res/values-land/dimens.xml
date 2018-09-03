@@ -1,25 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
-
-    <!--
-Refer to App Widget Documentation for margin information
-http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
-    -->
-    <dimen name="widget_margin">8dp</dimen>
-    <dimen name="widget_header_padding">8dp</dimen>
-    <dimen name="image_widget_header_width">32dp</dimen>
-    <dimen name="image_widget_header_height">32dp</dimen>
-    <dimen name="image_widget_margin">1dp</dimen>
-    <dimen name="widget_item_text_size">20sp</dimen>
-    <dimen name="widget_item_linear_layout_spacing">2dp</dimen>
-    <dimen name="recipe_name_widget_padding">20dp</dimen>
-    <dimen name="widget_recipe_name_size">15sp</dimen>
-    <dimen name="main_activity_progress_bar_layout_width">30dp</dimen>
-    <dimen name="main_activity_progress_bar_layout_height">30dp</dimen>
-    <dimen name="recipe_details_recipe_steps_header_padding">4dp</dimen>
-    <dimen name="recipe_details_recipe_steps_header_layout_margin">4dp</dimen>
-    <dimen name="recipe_details_ingredients_title_header_layout_margin">4dp</dimen>
-    <dimen name="recipe_details_ingredients_title_header_padding">4dp</dimen>
     <dimen name="recipe_details_activity_ingredients_header_padding">4dp</dimen>
     <dimen name="recipe_details_activity_ingriedients_header_layout_margin">4dp</dimen>
     <dimen name="recipe_details_activity_recipe_header_layout_margin">4dp</dimen>
