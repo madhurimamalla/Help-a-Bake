@@ -26,7 +26,6 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     public static final String RECIPE_EXTRA_INTENT = "RECIPE_EXTRA_INTENT";
     public static final String RECIPE_PARCELABLE = "RECIPE_PARCELABLE";
     public static final String RECIPE_STEP = "RECIPE_STEP";
-    public static final String TWO_PANE = "TWO_PANE";
 
     Recipe recipe;
     RecipeStep recipeStep;
@@ -55,18 +54,29 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
          */
         ButterKnife.bind(this);
 
-        Intent previousIntent = getIntent();
-        recipe = previousIntent.getParcelableExtra(RECIPE_EXTRA_INTENT);
-        recipeStep = previousIntent.getParcelableExtra(RECIPE_STEP);
+        if (savedInstanceState != null) {
+            recipe = savedInstanceState.getParcelable(RECIPE_PARCELABLE);
+            recipeStep = savedInstanceState.getParcelable(RECIPE_STEP);
+        } else {
+            Intent previousIntent = getIntent();
+            recipe = previousIntent.getParcelableExtra(RECIPE_EXTRA_INTENT);
+            recipeStep = previousIntent.getParcelableExtra(RECIPE_STEP);
+        }
         Timber.d("Recipe name: " + recipe.getName());
         Timber.d("Recipe step clicked was: " + recipeStep.getShortDescription());
-        Toast.makeText(this, "recipeStep: " + recipeStep.getShortDescription(), Toast.LENGTH_SHORT);
+        Toast.makeText(this, "recipeStep: " + recipeStep.getShortDescription(),
+                Toast.LENGTH_SHORT);
 
         Bundle bundle = new Bundle();
         bundle.putParcelable(RECIPE_STEP, recipeStep);
         bundle.putParcelable(RECIPE_EXTRA_INTENT, recipe);
-        bundle.putBoolean(TWO_PANE, true);
-        RecipeStepDetailFragment recipeStepDetailFragment = new RecipeStepDetailFragment();
+        RecipeStepDetailFragment recipeStepDetailFragment = (RecipeStepDetailFragment)
+                getSupportFragmentManager()
+                        .findFragmentById(R.id.recipe_step_detail_fragment);
+
+        if (recipeStepDetailFragment == null) {
+            recipeStepDetailFragment = new RecipeStepDetailFragment();
+        }
         recipeStepDetailFragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction()
@@ -90,5 +100,12 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(RECIPE_PARCELABLE, recipe);
+        outState.putParcelable(RECIPE_STEP, recipeStep);
     }
 }

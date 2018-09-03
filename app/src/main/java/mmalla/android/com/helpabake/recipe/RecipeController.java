@@ -105,4 +105,15 @@ public class RecipeController {
         return recipesDatabase.recipeDao().getRecipes();
     }
 
+    public Recipe fetchRecipeFromCache(int id){
+        return recipesDatabase.recipeDao().getRecipe(id);
+    }
+
+    public List<Ingredient> fetchRecipeIngredientsFromRecipe(int id){
+        return recipesDatabase.recipeDao().getIngredients(id);
+    }
+
+    public int fetchRecipeIdFromRecipeNo(int recipeNo){
+        return recipesDatabase.recipeDao().getRecipe(recipeNo).getId();
+    }
 }

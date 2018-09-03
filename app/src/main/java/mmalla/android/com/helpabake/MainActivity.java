@@ -77,11 +77,12 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
          * Retrieve the list of recipes
          */
         if (savedInstanceState != null) {
+            Timber.d("Main activity: Saved state found !!!");
             recipesList.clear();
             recipesList.addAll(savedInstanceState.<Recipe> getParcelableArrayList(RECIPE_LIST_SAVE_INSTANCE));
             showRecipesList(recipesList);
         } else {
-
+            Timber.d("Main activity: No saved state !!!");
             controller.fetchRecipes(new RecipeController.FetchRecipesCallback() {
 
                 @Override

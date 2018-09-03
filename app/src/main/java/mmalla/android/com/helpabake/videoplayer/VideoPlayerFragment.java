@@ -41,9 +41,13 @@ public class VideoPlayerFragment extends Fragment {
     SimpleExoPlayerView mExoPlayerView;
     SimpleExoPlayer mExoPlayer;
 
+    /**
+     * Parameters needed for the mExoplayer
+     */
     private boolean playWhenReady = true;
-    private int currentWindow = 0;
+    private int currentWindowIndex = 0;
     private long playbackPosition = 0;
+
     private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
     private ComponentListener componentListener;
 
@@ -51,6 +55,9 @@ public class VideoPlayerFragment extends Fragment {
     RecipeStep recipeStep;
     public static final String RECIPE_PARCELABLE = "RECIPE_PARCELABLE";
     public static final String RECIPE_STEP = "RECIPE_STEP";
+    public static final String PLAY_WHEN_READY = "PLAY_WHEN_READY";
+    public static final String CURRENT_PLAYBACK_POSITION = "CURRENT_PLAYBACK_POSITION";
+    public static final String CURRENT_WINDOW_INDEX = "CURRENT_WINDOW_INDEX";
 
     public VideoPlayerFragment() {
         /**
@@ -69,6 +76,11 @@ public class VideoPlayerFragment extends Fragment {
         if (savedInstanceState != null) {
             recipe = savedInstanceState.getParcelable(RECIPE_PARCELABLE);
             recipeStep = savedInstanceState.getParcelable(RECIPE_STEP);
+            playWhenReady = savedInstanceState.getBoolean(PLAY_WHEN_READY);
+            playbackPosition = savedInstanceState.getLong(CURRENT_PLAYBACK_POSITION);
+            currentWindowIndex = savedInstanceState.getInt(CURRENT_WINDOW_INDEX);
+            Timber.d("Player boolean value : " + playWhenReady);
+            Timber.d("Playback Position : " + playbackPosition);
         }
         /**
          * Get the recipe here and play around with it
@@ -80,7 +92,7 @@ public class VideoPlayerFragment extends Fragment {
         componentListener = new ComponentListener();
 
         Timber.d("URL for the recipe step is: " + recipeStep.getVideoURL());
-        if(recipeStep.getVideoURL().isEmpty() && !recipeStep.getThumbnailURL().isEmpty()){
+        if (recipeStep.getVideoURL().isEmpty() && !recipeStep.getThumbnailURL().isEmpty()) {
             recipeStep.setVideoURL(recipeStep.getThumbnailURL().trim());
         }
         return view;
@@ -96,12 +108,11 @@ public class VideoPlayerFragment extends Fragment {
         mExoPlayer.addListener(componentListener);
         mExoPlayerView.setPlayer(mExoPlayer);
 
-        mExoPlayer.setPlayWhenReady(playWhenReady);
-        mExoPlayer.seekTo(currentWindow, playbackPosition);
-
         Uri videoUri = Uri.parse(recipeStep.getVideoURL());
         MediaSource mediaSource = buildMediaSource(videoUri);
         mExoPlayer.prepare(mediaSource, true, false);
+        mExoPlayer.seekTo(currentWindowIndex, playbackPosition);
+        mExoPlayer.setPlayWhenReady(playWhenReady);
 
     }
 
@@ -159,7 +170,7 @@ public class VideoPlayerFragment extends Fragment {
     private void releasePlayer() {
         if (mExoPlayer != null) {
             playbackPosition = mExoPlayer.getCurrentPosition();
-            currentWindow = mExoPlayer.getCurrentWindowIndex();
+            currentWindowIndex = mExoPlayer.getCurrentWindowIndex();
             playWhenReady = mExoPlayer.getPlayWhenReady();
             mExoPlayer.removeListener(componentListener);
             mExoPlayer.release();
@@ -171,6 +182,10 @@ public class VideoPlayerFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(RECIPE_PARCELABLE, recipe);
         outState.putParcelable(RECIPE_STEP, recipeStep);
+        outState.putLong(CURRENT_PLAYBACK_POSITION, mExoPlayer.getCurrentPosition());
+        outState.putInt(CURRENT_WINDOW_INDEX, mExoPlayer.getCurrentWindowIndex());
+        outState.putBoolean(PLAY_WHEN_READY, mExoPlayer.getPlayWhenReady());
+        super.onSaveInstanceState(outState);
     }
 
     private class ComponentListener extends Player.DefaultEventListener {

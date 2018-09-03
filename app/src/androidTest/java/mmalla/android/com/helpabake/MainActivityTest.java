@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -48,12 +47,6 @@ public class MainActivityTest {
         onView(withId(R.id.error_message))
                 .check(matches(withText(
                         containsString("There is some error. Try again!"))));
-
-        /**
-         * Checks for items that do not exist here
-         */
-        onView(withId(R.id.recipe_name))
-                .check(doesNotExist());
 
         /**
          * This is needed as the views take some time to show up

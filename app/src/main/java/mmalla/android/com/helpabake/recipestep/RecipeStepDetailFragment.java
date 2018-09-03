@@ -69,22 +69,19 @@ public class RecipeStepDetailFragment extends Fragment {
         if (getArguments() != null) {
             recipeStep = getArguments().getParcelable(RECIPE_STEP);
             recipe = getArguments().getParcelable(RECIPE_EXTRA_INTENT);
-            mTwoPane = getArguments().getBoolean(TWO_PANE);
+            this.mTwoPane = getArguments().getBoolean(TWO_PANE);
         }
 
         Timber.d("Recipe name: " + recipe.getName());
         Timber.d("Recipe step clicked was: " + recipeStep.getShortDescription());
         Toast.makeText(getActivity(), "recipeStep: " + recipeStep.getShortDescription(), Toast.LENGTH_SHORT);
 
-
-        int next = 0;
-        int previous = 0;
         final int position = getThePositionOfRecipeStep(recipeStep, recipe);
         if (position == -1) {
             Timber.d("This recipe step wasn't found in the recipe");
         }
 
-        playTheVideoIfAnyAndRecipeStepDesc(recipeStep, position, recipe);
+        playTheVideoIfAnyAndRecipeStepDesc(recipeStep, position, recipe, mTwoPane);
         return rootView;
     }
 
@@ -108,24 +105,47 @@ public class RecipeStepDetailFragment extends Fragment {
      * @param position
      * @param recipe
      */
-    public void playTheVideoIfAnyAndRecipeStepDesc(RecipeStep recipeStep, int position, Recipe recipe) {
-
+    public void playTheVideoIfAnyAndRecipeStepDesc(RecipeStep recipeStep, int position, Recipe recipe, Boolean mTwoPane) {
 
         if (recipeStep.getVideoURL() == null || recipeStep.getVideoURL().trim().isEmpty()) {
+            /**
+             * When there's no video to play
+             */
             mVideoNotAvailable.setVisibility(View.VISIBLE);
         } else {
+            /**
+             * When there's a video to play
+             */
             mVideoNotAvailable.setVisibility(View.INVISIBLE);
 
             Bundle bundleUpVideoRelated = new Bundle();
             bundleUpVideoRelated.putParcelable(RECIPE_PARCELABLE, recipe);
             bundleUpVideoRelated.putParcelable(RECIPE_STEP, recipe.getSteps().get(position));
-            VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment();
-            videoPlayerFragment.setArguments(bundleUpVideoRelated);
-            getFragmentManager().beginTransaction().replace(R.id.container_for_video, videoPlayerFragment).commit();
+            VideoPlayerFragment videoPlayerFragment = null;
+            if (mTwoPane == true) {
+                videoPlayerFragment = new VideoPlayerFragment();
+                videoPlayerFragment.setArguments(bundleUpVideoRelated);
+                getFragmentManager().beginTransaction().add(R.id.container_for_video, videoPlayerFragment).commit();
+            } else {
+                if (getFragmentManager().findFragmentById(R.id.container_for_video) != null) {
+                    videoPlayerFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.container_for_video);
+                    getFragmentManager().beginTransaction().replace(R.id.container_for_video, videoPlayerFragment).commit();
+                } else {
+                    videoPlayerFragment = new VideoPlayerFragment();
+                    videoPlayerFragment.setArguments(bundleUpVideoRelated);
+                    getFragmentManager().beginTransaction().add(R.id.container_for_video, videoPlayerFragment).commit();
+                }
+            }
         }
         /*
          * Setting the text to show the Complete Recipe Description
          */
         mRecipeStepDesc.setText(recipe.getSteps().get(position).getDescription());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(TWO_PANE, mTwoPane);
     }
 }

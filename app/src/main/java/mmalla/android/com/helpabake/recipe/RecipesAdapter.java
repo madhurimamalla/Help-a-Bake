@@ -34,7 +34,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.MyViewHo
         public MyViewHolder(View view) {
             super(view);
 
-            mTextView = (TextView) view.findViewById(R.id.recipe_name);
+            mTextView = (TextView) view.findViewById(R.id.ingredient_name);
         }
     }
 
@@ -49,7 +49,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.MyViewHo
     public void onBindViewHolder(RecipesAdapter.MyViewHolder holder, final int position) {
         Recipe recipe = recipeList.get(holder.getAdapterPosition());
 
-        TextView recipeNameTextView = (TextView) holder.mTextView.findViewById(R.id.recipe_name);
+        TextView recipeNameTextView = (TextView) holder.mTextView.findViewById(R.id.ingredient_name);
         recipeNameTextView.setText(recipe.getName());
         recipeNameTextView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="@dimen/widget_item_linear_layout_spacing">
 
         <ImageView
@@ -16,7 +17,7 @@
             android:src="@mipmap/widget_icon_recipe" />
 
         <TextView
-            android:id="@+id/recipe_name"
+            android:id="@+id/ingredient_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -25,7 +26,28 @@
             android:padding="@dimen/recipe_name_widget_padding"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
             android:textSize="@dimen/widget_recipe_name_size"
-            tools:text="Recipe name" />
-    </LinearLayout>
+            tools:text="Ingredient name" />
 
+        <TextView
+            android:id="@+id/quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:padding="@dimen/recipe_name_widget_padding"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
+            android:textSize="@dimen/widget_recipe_name_size"
+            tools:text="3" />
+
+        <TextView
+            android:id="@+id/measurement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:padding="@dimen/recipe_name_widget_padding"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
+            android:textSize="@dimen/widget_recipe_name_size"
+            tools:text="lb" />
+    </LinearLayout>
 </LinearLayout>

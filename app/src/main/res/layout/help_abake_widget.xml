@@ -15,9 +15,9 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:orientation="horizontal"
+            android:padding="16dp"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:padding="16dp">
+            android:paddingRight="5dp">
 
             <ImageView
                 android:id="@+id/widget_img_launcher"
@@ -41,6 +41,16 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/name_of_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recipe Name"
+            android:textAlignment="center"
+            android:padding="@dimen/recipe_name_widget_padding"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:background="@drawable/rounded_corner"/>
 
         <GridView
             android:id="@+id/widget_grid_view"

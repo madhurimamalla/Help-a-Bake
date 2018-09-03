@@ -6,13 +6,18 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.widget.RemoteViews;
 
+import java.util.Random;
+
 import mmalla.android.com.helpabake.R;
 import mmalla.android.com.helpabake.RecipeDetailsActivity;
+import mmalla.android.com.helpabake.recipe.Recipe;
+import mmalla.android.com.helpabake.recipe.RecipeController;
 import timber.log.Timber;
 
 /**
@@ -20,6 +25,9 @@ import timber.log.Timber;
  * App Widget Configuration implemented in {@link HelpABakeWidgetConfigureActivity HelpABakeWidgetConfigureActivity}
  */
 public class HelpABakeWidgetProvider extends AppWidgetProvider {
+
+    public static String SHARED_PREF_RECIPE_NO = "SHARED_PREF_RECIPE_NO";
+    public static String SHARED_PREF_WIDGET_RELATED = "SHARED_PREF_WIDGET_RELATED";
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
@@ -42,8 +50,27 @@ public class HelpABakeWidgetProvider extends AppWidgetProvider {
 
         views.setEmptyView(R.id.widget_grid_view, R.id.empty_view);
 
+        /**
+         * Note: This adds the view which shows the title of the recipe
+         */
+        int RECIPE_NUMBER;
+        SharedPreferences sp = context.getSharedPreferences(SHARED_PREF_WIDGET_RELATED, 0);
+        SharedPreferences.Editor editor = sp.edit();
+        RECIPE_NUMBER = generateRandomIntIntRange(1, 4);
+        editor.putInt(SHARED_PREF_RECIPE_NO, RECIPE_NUMBER);
+        editor.commit();
+        RecipeController recipeController = new RecipeController(context);
+        int id = recipeController.fetchRecipeIdFromRecipeNo(RECIPE_NUMBER);
+        Recipe recipe = recipeController.fetchRecipeFromCache(id);
+        views.setTextViewText(R.id.name_of_recipe, recipe.getName());
+
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
+
+    public static int generateRandomIntIntRange(int min, int max) {
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
     }
 
     /**

@@ -3,6 +3,7 @@ package mmalla.android.com.helpabake.recipestep;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,9 @@ import butterknife.ButterKnife;
 import mmalla.android.com.helpabake.R;
 import mmalla.android.com.helpabake.RecipeDetailsActivity;
 import mmalla.android.com.helpabake.recipe.Recipe;
+import timber.log.Timber;
+
+import static mmalla.android.com.helpabake.recipestep.RecipeStepDetailFragment.TWO_PANE;
 
 public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.MyStepsViewHolder> {
 
@@ -66,27 +70,38 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         mShortDesc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RecipeStep recipeStep1 = mList.get(position);
+                RecipeStep recipeStep = mList.get(position);
 
                 if (mTwoPane) {
                     Bundle bundle = new Bundle();
                     /**
                      * Initially display the first step
                      */
-                    bundle.putParcelable(RECIPE_STEP, recipeStep1);
+                    bundle.putParcelable(RECIPE_STEP, recipeStep);
                     bundle.putParcelable(RECIPE_EXTRA_INTENT, recipe);
-                    RecipeStepDetailFragment recipeStepDetailFragment = new RecipeStepDetailFragment();
-                    recipeStepDetailFragment.setArguments(bundle);
+                    bundle.putBoolean(TWO_PANE, true);
                     /**
                      * Calling the fragment as this is a tablet
                      */
+                    Timber.d("Initiating and replacing a Step Detail Fragment");
+                    Log.d("ItemListActivity", "Initiating a fragment");
+                    RecipeStepDetailFragment recipeStepDetailFragment = new RecipeStepDetailFragment();
+                    recipeStepDetailFragment.setArguments(bundle);
                     mParentActivity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.recipe_step_detail_fragment, recipeStepDetailFragment).commit();
+                            .replace(R.id.recipe_step_detail_fragment, recipeStepDetailFragment)
+                            .commit();
                 } else {
-                    Toast.makeText(v.getContext(), recipeStep.getShortDescription(), Toast.LENGTH_SHORT).show();
-                    Intent recipeStepDetailIntent = new Intent(v.getContext(), RecipeStepDetailActivity.class);
+                    /**
+                     * If it's a phone, create a RecipeStepDetailActivity
+                     */
+                    Toast.makeText(v.getContext(), recipeStep.getShortDescription(),
+                            Toast.LENGTH_SHORT).show();
+                    Intent recipeStepDetailIntent = new Intent(v.getContext(),
+                            RecipeStepDetailActivity.class);
                     recipeStepDetailIntent.putExtra(RECIPE_EXTRA_INTENT, recipe);
-                    recipeStepDetailIntent.putExtra(RECIPE_STEP, recipeStep1);
+                    recipeStepDetailIntent.putExtra(TWO_PANE, false);
+                    recipeStepDetailIntent.putExtra(RECIPE_STEP, recipeStep);
+
                     v.getContext().startActivity(recipeStepDetailIntent);
                 }
 
@@ -98,6 +113,4 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     public int getItemCount() {
         return mList.size();
     }
-
-
 }

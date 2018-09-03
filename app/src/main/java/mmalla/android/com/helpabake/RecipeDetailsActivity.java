@@ -26,6 +26,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     public static final String RECIPE_EXTRA_INTENT = "RECIPE_EXTRA_INTENT";
     public static final String RECIPE_STEP = "RECIPE_STEP";
     public static final String RECIPE_ID_FROM_WIDGET = "RECIPE_ID_FROM_WIDGET";
+    public static final String TWO_PANE = "TWO_PANE";
     public Recipe recipe;
     public RecipeStep recipeStep;
     private RecipesDatabase recipesDatabase;
@@ -50,9 +51,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         recipesDatabase = RecipesDatabase.getDatabase(getApplicationContext());
 
-
         if (savedInstanceState != null) {
             recipe = savedInstanceState.getParcelable(RECIPE_EXTRA_INTENT);
+            mTwoPane = savedInstanceState.getBoolean(TWO_PANE);
             Timber.d("Restoring the previous information!...");
         } else {
             /**
@@ -63,6 +64,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 recipe = previousIntent.getParcelableExtra(RECIPE_EXTRA_INTENT);
             }
             else if(previousIntent.getExtras().containsKey(RECIPE_ID_FROM_WIDGET)){
+                /**
+                 * Flow when the app is lauched from the widget
+                 */
                 int id = previousIntent.getExtras().getInt(RECIPE_ID_FROM_WIDGET);
                 recipe = recipesDatabase.recipeDao().getRecipe(id);
                 recipe.setIngredients((ArrayList<Ingredient>) recipesDatabase.recipeDao().getIngredients(id));
@@ -77,10 +81,10 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             mTwoPane = true;
             Timber.d("This a tablet!");
         }
-        getDetails();
+        getDetails(savedInstanceState);
     }
 
-    public void getDetails() {
+    private void getDetails(Bundle savedInstanceState) {
         /**
          * Setting recipe name here
          */
@@ -88,22 +92,30 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         List<Ingredient> ingredients = recipe.getIngredients();
 
-        IngredientsListFragment ingredientsListFragment = new IngredientsListFragment();
-        ingredientsListFragment.setIngredientsList(ingredients);
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.ingredient_fragment_container, ingredientsListFragment);
-        fragmentTransaction.commit();
+        IngredientsListFragment ingredientsListFragment = (IngredientsListFragment)getFragmentManager().findFragmentById(R.id.ingredient_fragment_container);
+        if(ingredientsListFragment == null) {
+            ingredientsListFragment = new IngredientsListFragment();
+            ingredientsListFragment.setIngredientsList(ingredients);
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.ingredient_fragment_container, ingredientsListFragment);
+            fragmentTransaction.commit();
+        }
 
         List<RecipeStep> recipeSteps = recipe.getSteps();
 
-        RecipeStepsFragment recipeStepsFragment = new RecipeStepsFragment();
-        recipeStepsFragment.setRecipeStepList(recipeSteps);
-        recipeStepsFragment.setRecipe(recipe);
-        recipeStepsFragment.setMTwoPane(mTwoPane);
-        recipeStepsFragment.setParentActivity(this);
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.recipe_steps_fragment_container, recipeStepsFragment);
-        transaction.commit();
+        RecipeStepsFragment recipeStepsFragment = (RecipeStepsFragment)getFragmentManager()
+                .findFragmentById(R.id.recipe_steps_fragment_container);
+
+        if(recipeStepsFragment == null) {
+            recipeStepsFragment = new RecipeStepsFragment();
+            recipeStepsFragment.setRecipeStepList(recipeSteps);
+            recipeStepsFragment.setRecipe(recipe);
+            recipeStepsFragment.setMTwoPane(mTwoPane);
+            recipeStepsFragment.setParentActivity(this);
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.recipe_steps_fragment_container, recipeStepsFragment);
+            transaction.commit();
+        }
 
         if(mTwoPane == true){
             Bundle bundle = new Bundle();
@@ -113,13 +125,19 @@ public class RecipeDetailsActivity extends AppCompatActivity {
              */
             recipeStep = recipe.getSteps().get(0);
             bundle.putParcelable(RECIPE_STEP, recipeStep);
-            RecipeStepDetailFragment recipeStepDetailFragment = new RecipeStepDetailFragment();
-            recipeStepDetailFragment.setArguments(bundle);
-            /**
-             * Calling the fragment as this is a tablet
-             */
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.recipe_step_detail_fragment, recipeStepDetailFragment).commit();
+            bundle.putBoolean(TWO_PANE, true);
+            RecipeStepDetailFragment recipeStepDetailFragment = (RecipeStepDetailFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.recipe_step_detail_fragment);
+            if(recipeStepDetailFragment == null) {
+                recipeStepDetailFragment = new RecipeStepDetailFragment();
+                recipeStepDetailFragment.setArguments(bundle);
+                /**
+                 * Calling the fragment as this is a tablet
+                 */
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.recipe_step_detail_fragment, recipeStepDetailFragment)
+                        .commit();
+            }
         }
     }
 
@@ -128,5 +146,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         Timber.d("Inside onSaveInstanceState() Saving state ....");
         outState.putParcelable(RECIPE_EXTRA_INTENT, recipe);
+        outState.putBoolean(TWO_PANE, mTwoPane);
     }
 }
