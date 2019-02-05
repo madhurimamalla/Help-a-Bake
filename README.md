@@ -17,7 +17,7 @@ Your task is to create a Android Baking App that will allow Udacity’s resident
 * Handle error cases in Android.
 * Add a widget to your app experience.
 * Leverage a third-party library in your app.
-* Use Fragments to create a responsive design that works on phones and tablets.
+* Use Fragments to create a responsive design that works both on phones and tablets.
 
 ### Screenshots from the implemented Android app: 
 #### For a phone
