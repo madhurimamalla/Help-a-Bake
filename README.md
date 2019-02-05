@@ -4,12 +4,12 @@
 Your task is to create a Android Baking App that will allow Udacity’s resident baker-in-chief, Miriam, to share her recipes with the world. You will create an app that will allow a user to select a recipe and see video-guided steps for how to complete it. The user can also add to his home screen as a widget for faster access of the recipe.
 
 ### Third party libraries:
-* ![Timber](http://jakewharton.github.io/timber/) - A logger with a small, extensible API which provides utility on top of Android's normal Log class
-* ![Room](https://developer.android.com/topic/libraries/architecture/room) - provides an abstraction layer over SQLite to allow for more robust database access while harnessing the full power of SQLite.
-* ![ButterKnife](http://jakewharton.github.io/butterknife/) - Field and method binding for Android views
-* ![Espresso](https://developer.android.com/training/testing/espresso/) - to write concise, beautiful, and reliable Android UI tests.
-* ![Retrofit](https://square.github.io/retrofit/) - A type-safe HTTP client for Android and Java
-* ![Exoplayer](https://github.com/google/ExoPlayer) - An extensible media player for Android
+* [Timber](http://jakewharton.github.io/timber/) - A logger with a small, extensible API which provides utility on top of Android's normal Log class
+* [Room](https://developer.android.com/topic/libraries/architecture/room) - provides an abstraction layer over SQLite to allow for more robust database access while harnessing the full power of SQLite.
+* [ButterKnife](http://jakewharton.github.io/butterknife/) - Field and method binding for Android views
+* [Espresso](https://developer.android.com/training/testing/espresso/) - to write concise, beautiful, and reliable Android UI tests.
+* [Retrofit](https://square.github.io/retrofit/) - A type-safe HTTP client for Android and Java
+* [Exoplayer](https://github.com/google/ExoPlayer) - An extensible media player for Android
 
 ### In this project you will:
 
